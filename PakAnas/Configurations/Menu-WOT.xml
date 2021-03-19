@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu>
+  <menu-item Id="menu-home" Enabled="True" Visible="True" Url="Home" Text="Home" Description="Back to Home page" Glyph="tachometer" >
+  </menu-item>
+
+  <menu-item Id="menu-master" Enabled="True" Visible="True" Url="#" Text="Master" Description="Vehicle" Glyph="cog">
+    <menu-item Id="menu-Country-Master" Enabled="True" Visible="True" Url="Country" Text="Country" Description="Country Master" Glyph="cog">
+
+    </menu-item>
+    <menu-item Id="menu-step-flow" Enabled="True" Visible="True" Url="StepFlow" Text="Step Flow" Description="Step Flow" Glyph="cog">
+
+    </menu-item>
+    <menu-item Id="menu-dept-flow" Enabled="True" Visible="True" Url="DeptFlow" Text="Dept Flow" Description="Dept Flow" Glyph="cog">
+
+    </menu-item>
+    <menu-item Id="menu-flow" Enabled="True" Visible="True" Url="Flow" Text="Flow" Description="Flow" Glyph="cog">
+
+    </menu-item>
+
+    <menu-item Id="menu-tool-crud" Enabled="True" Visible="True" Url="ToolCrud" Text="Tool Crud" Description="Tool Crud" Glyph="cog">
+
+    </menu-item>
+
+  </menu-item>
+
+  <menu-item Id="menu-monitoring" Enabled="True" Visible="False" Url="#" Text="Monitoring" Description="Monitoring" Glyph="cog">
+    <menu-item Id="menu-Log-Monitoring" Enabled="True" Visible="True" Url="LogMonitoring" Text="Log Monitoring" Description="Log Monitoring" Glyph="tachometer"  >
+
+    </menu-item>
+  </menu-item>
+</menu>

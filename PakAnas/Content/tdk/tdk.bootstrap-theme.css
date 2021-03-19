@@ -1,0 +1,104 @@
+﻿/* Bootstrap Override */
+.nav > li > a:hover,
+.nav > li > a:focus 
+{
+    color: #E9EFF5;
+    background-color: #00305E;
+    -webkit-box-shadow:inset 0 0 1px 1px rgba(0,0,0,0.5);
+    box-shadow:inset 0 0 1px 1px rgba(0,0,0,0.5);
+}
+.navbar 
+{
+    -moz-border-radius: 0;
+    border-radius: 0;    
+}
+
+/* Login */
+.login-box 
+{
+    border: 1px solid #ccc;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;    
+}
+
+/* Layout */
+.menu 
+{
+    background-color: #033c73;
+    border-color: #022f5a;    
+}
+.menu,
+.menu a 
+{
+    color: #C5D4E3;
+}
+
+/* Scroll */
+.vertical-track,
+.vertical-handle {
+    width: 8px; 
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.vertical-track:hover,
+.vertical-track.dragging,
+.vertical-track:hover .vertical-handle,
+.vertical-track.dragging .vertical-handle 
+{
+    width: 10px;
+}
+.vertical-handle 
+{    
+    background-color: #033C73;    
+}
+.vertical-track:hover,
+.vertical-track.dragging 
+{
+    background-color: #d9d9d9;
+    background-color: rgba(0,0,0,0.15);
+}
+
+/* Typeahead */
+.tt-hint {
+    color: #999;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.tt-dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
+}
+.tt-suggestion.tt-is-under-cursor {
+    color: #fff;
+    background-color: #dfdfdf;
+}
+.tt-suggestion.tt-is-under-cursor a {
+    color: #fff;
+}
+
+.tdk-login.box 
+{
+    border: 1px solid #e1e1e1;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(100,100,100,1);
+    box-shadow: 1px 1px 5px 1px rgba(100,100,100,1);
+            
+    position: abolute;
+    top: 50%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+}

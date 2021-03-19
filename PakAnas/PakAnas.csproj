@@ -1,0 +1,1077 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2DC5FC0C-9911-47D7-883B-8744230B4D6C}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PakAnas</RootNamespace>
+    <AssemblyName>PakAnas</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Commons\Constants\CommonConstant.cs" />
+    <Compile Include="Commons\Controllers\BaseController.cs" />
+    <Compile Include="Commons\Controllers\BaseUploadDownloadController.cs" />
+    <Compile Include="Commons\Controllers\BaseUploadDownloadFtpServerController.cs" />
+    <Compile Include="Commons\Controllers\BaseInterfaceFileOutController.cs" />
+    <Compile Include="Commons\Controllers\IExcelWriter.cs" />
+    <Compile Include="Commons\Controllers\NPOIWriter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Commons\Exceptions\DBConnectionException.cs" />
+    <Compile Include="Commons\Exceptions\LogDBException.cs" />
+    <Compile Include="Commons\Helpers\BaseRepoHelper.cs" />
+    <Compile Include="Commons\Helpers\Util.cs" />
+    <Compile Include="Commons\LogDatabase\ILogDBSession.cs" />
+    <Compile Include="Commons\LogDatabase\LogDBManager.cs" />
+    <Compile Include="Commons\LogDatabase\LogDBResult.cs" />
+    <Compile Include="Commons\LogDatabase\LogDBSession.cs" />
+    <Compile Include="Commons\Models\AjaxResult.cs" />
+    <Compile Include="Commons\Models\BaseModel.cs" />
+    <Compile Include="Commons\Models\BaseResult.cs" />
+    <Compile Include="Commons\Models\InterfaceFileOutModel.cs" />
+    <Compile Include="Commons\Models\OrganizationPerson.cs" />
+    <Compile Include="Commons\Models\PagingModel.cs" />
+    <Compile Include="Commons\Models\RepoResult.cs" />
+    <Compile Include="Commons\Models\TextValue.cs" />
+    <Compile Include="Commons\Repositories\BaseRepo.cs" />
+    <Compile Include="Commons\Helpers\MimeExtensionHelper.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PakAnasController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Paging.cs" />
+    <Compile Include="Models\PakAnas\PakAnass.cs" />
+    <Compile Include="Models\SimpleMasterCustomModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PakAnasRepository.cs" />
+    <Content Include="Content\css\chosen.min.css" />
+    <Content Include="Content\js\chosen.jquery.min.js" />
+    <Content Include="Content\css\FixedTable.css" />
+    <Content Include="Content\css\ScrollTabla.css" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\js\freezeTable.js" />
+    <Content Include="Content\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\js\jquery.CongelarFilaColumna.js" />
+    <Content Include="Configurations\Menu-WOT.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\Menu-LOCAL.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Bootstrap\css\FixedTable.css" />
+    <Content Include="Content\Images\00000000.jpg" />
+    <Content Include="Content\Images\file\audio.gif" />
+    <Content Include="Content\Images\file\compressed.gif" />
+    <Content Include="Content\Images\file\folder.gif" />
+    <Content Include="Content\Images\file\generic.gif" />
+    <Content Include="Content\Images\file\html.gif" />
+    <Content Include="Content\Images\file\image.gif" />
+    <Content Include="Content\Images\file\script.gif" />
+    <Content Include="Content\Images\file\text.gif" />
+    <Content Include="Content\Images\icon\copy.gif" />
+    <Content Include="Content\Images\icon\delete.gif" />
+    <Content Include="Content\Images\icon\folderup.gif" />
+    <Content Include="Content\Images\icon\green_24px.png" />
+    <Content Include="Content\Images\icon\move.gif" />
+    <Content Include="Content\Images\icon\newfolder.gif" />
+    <Content Include="Content\Images\icon\redx_24px.png" />
+    <Content Include="Content\Images\icon\red_24px.png" />
+    <Content Include="Content\Images\icon\rename.gif" />
+    <Content Include="Content\Images\icon\upload.gif" />
+    <Content Include="Content\Images\icon\yellow_24px.png" />
+    <Content Include="Content\Images\icon\zip.gif" />
+    <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\Login\etios.jpg" />
+    <Content Include="Content\Images\Login\innova.jpg" />
+    <Content Include="Content\Images\Login\sienta.jpg" />
+    <Content Include="Content\Images\Login\vios.jpg" />
+    <Content Include="Content\Images\Login\yaris.jpg" />
+    <Content Include="Content\js\FixedTable.js" />
+    <Content Include="Content\tdk\CMD.css" />
+    <Content Include="Content\tdk\tdk.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configurations\Menu-DEV.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\angular\angular-gridster.js" />
+    <Content Include="Content\angular\angular-gridster.min.css" />
+    <Content Include="Content\angular\angular-gridster.min.js" />
+    <Content Include="Content\angular\angular.js" />
+    <Content Include="Content\angular\script-dashboard.js" />
+    <Content Include="Content\angular\script-main.js" />
+    <Content Include="Content\angular\style-common.css" />
+    <Content Include="Content\angular\style-dashboard.css" />
+    <Content Include="Content\angular\style-main.css" />
+    <Content Include="Content\angular\ui-bootstrap-tpls.min.js" />
+    <Content Include="Content\Bootstrap\avatars\anonymous.jpg" />
+    <Content Include="Content\Bootstrap\avatars\avatar.png" />
+    <Content Include="Content\Bootstrap\avatars\avatar1.png" />
+    <Content Include="Content\Bootstrap\avatars\avatar2.png" />
+    <Content Include="Content\Bootstrap\avatars\avatar3.png" />
+    <Content Include="Content\Bootstrap\avatars\avatar4.png" />
+    <Content Include="Content\Bootstrap\avatars\avatar5.png" />
+    <Content Include="Content\Bootstrap\avatars\profile-pic.jpg" />
+    <Content Include="Content\Bootstrap\avatars\user.jpg" />
+    <Content Include="Content\Bootstrap\css\ace-fonts.css" />
+    <Content Include="Content\Bootstrap\css\ace-ie.css" />
+    <Content Include="Content\Bootstrap\css\ace-part2.css" />
+    <Content Include="Content\Bootstrap\css\ace-rtl.css" />
+    <Content Include="Content\Bootstrap\css\ace-skins.css" />
+    <Content Include="Content\Bootstrap\css\ace.css" />
+    <Content Include="Content\Bootstrap\css\ace.onpage-help.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-duallistbox.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-editable.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-multiselect.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-timepicker.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Bootstrap\css\chatbox.css" />
+    <Content Include="Content\Bootstrap\css\chosen-sprite%402x.png" />
+    <Content Include="Content\Bootstrap\css\chosen-sprite.png" />
+    <Content Include="Content\Bootstrap\css\chosen.css" />
+    <Content Include="Content\Bootstrap\css\colorbox.css" />
+    <Content Include="Content\Bootstrap\css\colorpicker.css" />
+    <Content Include="Content\Bootstrap\css\datepicker.css" />
+    <Content Include="Content\Bootstrap\css\daterangepicker.css" />
+    <Content Include="Content\Bootstrap\css\dropzone.css" />
+    <Content Include="Content\Bootstrap\css\font-awesome.css" />
+    <Content Include="Content\Bootstrap\css\fullcalendar.css" />
+    <Content Include="Content\Bootstrap\css\fullcalendar.print.css" />
+    <Content Include="Content\Bootstrap\css\images\border.png" />
+    <Content Include="Content\Bootstrap\css\images\border1.png" />
+    <Content Include="Content\Bootstrap\css\images\border2.png" />
+    <Content Include="Content\Bootstrap\css\images\controls.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderBottomCenter.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderBottomLeft.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderBottomRight.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderMiddleLeft.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderMiddleRight.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderTopCenter.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderTopLeft.png" />
+    <Content Include="Content\Bootstrap\css\images\ie6\borderTopRight.png" />
+    <Content Include="Content\Bootstrap\css\images\loading.gif" />
+    <Content Include="Content\Bootstrap\css\images\loading_background.png" />
+    <Content Include="Content\Bootstrap\css\images\meteorshower.jpg" />
+    <Content Include="Content\Bootstrap\css\images\meteorshower2.jpg" />
+    <Content Include="Content\Bootstrap\css\images\overlay.png" />
+    <Content Include="Content\Bootstrap\css\images\pattern-old.jpg" />
+    <Content Include="Content\Bootstrap\css\images\pattern-old.png" />
+    <Content Include="Content\Bootstrap\css\images\pattern.png" />
+    <Content Include="Content\Bootstrap\css\images\spritemap%402x.png" />
+    <Content Include="Content\Bootstrap\css\images\spritemap.png" />
+    <Content Include="Content\Bootstrap\css\img\alpha.png" />
+    <Content Include="Content\Bootstrap\css\img\hue.png" />
+    <Content Include="Content\Bootstrap\css\img\saturation.png" />
+    <Content Include="Content\Bootstrap\css\jquery-ui.css" />
+    <Content Include="Content\Bootstrap\css\jquery-ui.custom.css" />
+    <Content Include="Content\Bootstrap\css\jquery.gritter.css" />
+    <Content Include="Content\Bootstrap\css\pace.css" />
+    <Content Include="Content\Bootstrap\css\prettify.css" />
+    <Content Include="Content\Bootstrap\css\sb-admin-2.css" />
+    <Content Include="Content\Bootstrap\css\select2-spinner.gif" />
+    <Content Include="Content\Bootstrap\css\select2.css" />
+    <Content Include="Content\Bootstrap\css\select2.png" />
+    <Content Include="Content\Bootstrap\css\select2x2.png" />
+    <Content Include="Content\Bootstrap\css\sunburst.css" />
+    <Content Include="Content\Bootstrap\css\tdk.css" />
+    <Content Include="Content\Bootstrap\css\ui.jqgrid.css" />
+    <Content Include="Content\Bootstrap\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Bootstrap\fonts\leaguespartan-bold.svg" />
+    <Content Include="Content\Bootstrap\images\back_disabled.png" />
+    <Content Include="Content\Bootstrap\images\back_enabled.png" />
+    <Content Include="Content\Bootstrap\images\back_enabled_hover.png" />
+    <Content Include="Content\Bootstrap\images\email1.png" />
+    <Content Include="Content\Bootstrap\images\email2.png" />
+    <Content Include="Content\Bootstrap\images\email3.png" />
+    <Content Include="Content\Bootstrap\images\email4.png" />
+    <Content Include="Content\Bootstrap\images\forward_disabled.png" />
+    <Content Include="Content\Bootstrap\images\forward_enabled.png" />
+    <Content Include="Content\Bootstrap\images\forward_enabled_hover.png" />
+    <Content Include="Content\Bootstrap\images\gallery\image-1.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\image-2.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\image-3.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\image-4.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\image-5.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\image-6.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-1.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-2.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-3.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-4.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-5.jpg" />
+    <Content Include="Content\Bootstrap\images\gallery\thumb-6.jpg" />
+    <Content Include="Content\Bootstrap\images\sort_asc.png" />
+    <Content Include="Content\Bootstrap\images\sort_asc_disabled.png" />
+    <Content Include="Content\Bootstrap\images\sort_both.png" />
+    <Content Include="Content\Bootstrap\images\sort_desc.png" />
+    <Content Include="Content\Bootstrap\images\sort_desc_disabled.png" />
+    <Content Include="Content\Bootstrap\images\spritemap%402x.png" />
+    <Content Include="Content\Bootstrap\images\spritemap.png" />
+    <Content Include="Content\Bootstrap\img\app-logo.png" />
+    <Content Include="Content\Bootstrap\img\clear.png" />
+    <Content Include="Content\Bootstrap\img\Error.png" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\Bootstrap\img\information.png" />
+    <Content Include="Content\Bootstrap\img\istd-nav-logo.png" />
+    <Content Include="Content\Bootstrap\img\istd-nav-logo1.png" />
+    <Content Include="Content\Bootstrap\img\loading.gif" />
+    <Content Include="Content\Bootstrap\img\question.png" />
+    <Content Include="Content\Bootstrap\img\Warning.png" />
+    <Content Include="Content\Bootstrap\js\ace-elements.js" />
+    <Content Include="Content\Bootstrap\js\ace-extra.js" />
+    <Content Include="Content\Bootstrap\js\ace.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.ajax-content.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.auto-container.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.auto-padding.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.onpage-help.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.searchbox-autocomplete.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.settings-rtl.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.settings-skin.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.settings.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.sidebar-scroll-1.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.sidebar-scroll-2.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.sidebar.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.submenu-hover.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.touch-drag.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.widget-box.js" />
+    <Content Include="Content\Bootstrap\js\ace\ace.widget-on-reload.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.aside.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.colorpicker.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.fileinput.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.onpage-help.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.scroller.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.spinner.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.treeview.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.typeahead.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.wizard.js" />
+    <Content Include="Content\Bootstrap\js\ace\elements.wysiwyg.js" />
+    <Content Include="Content\Bootstrap\js\additional-methods.js" />
+    <Content Include="Content\Bootstrap\js\bootbox.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-colorpicker.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-filestyle.min.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-multiselect.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-tag.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap-wysiwyg.js" />
+    <Content Include="Content\Bootstrap\js\bootstrap.js" />
+    <Content Include="Content\Bootstrap\js\chosen.jquery.js" />
+    <Content Include="Content\Bootstrap\js\dataTables\extensions\ColVis\js\dataTables.colVis.js" />
+    <Content Include="Content\Bootstrap\js\dataTables\extensions\TableTools\js\dataTables.tableTools.js" />
+    <Content Include="Content\Bootstrap\js\dataTables\extensions\TableTools\swf\copy_csv_xls.swf" />
+    <Content Include="Content\Bootstrap\js\dataTables\extensions\TableTools\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\Bootstrap\js\dataTables\jquery.dataTables.bootstrap.js" />
+    <Content Include="Content\Bootstrap\js\dataTables\jquery.dataTables.js" />
+    <Content Include="Content\Bootstrap\js\date-time\bootstrap-datepicker.js" />
+    <Content Include="Content\Bootstrap\js\date-time\bootstrap-datetimepicker.js" />
+    <Content Include="Content\Bootstrap\js\date-time\bootstrap-timepicker.js" />
+    <Content Include="Content\Bootstrap\js\date-time\daterangepicker.js" />
+    <Content Include="Content\Bootstrap\js\date-time\moment.js" />
+    <Content Include="Content\Bootstrap\js\dropzone.js" />
+    <Content Include="Content\Bootstrap\js\excanvas.js" />
+    <Content Include="Content\Bootstrap\js\flot\jquery.flot.js" />
+    <Content Include="Content\Bootstrap\js\flot\jquery.flot.pie.js" />
+    <Content Include="Content\Bootstrap\js\flot\jquery.flot.resize.js" />
+    <Content Include="Content\Bootstrap\js\fuelux\fuelux.spinner.js" />
+    <Content Include="Content\Bootstrap\js\fuelux\fuelux.tree.js" />
+    <Content Include="Content\Bootstrap\js\fuelux\fuelux.wizard.js" />
+    <Content Include="Content\Bootstrap\js\fullcalendar.js" />
+    <Content Include="Content\Bootstrap\js\html5shiv.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-ar.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-bg.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-bg1251.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-cat.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-cn.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-cs.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-da.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-de.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-dk.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-el.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-en.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-es.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-fa.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-fi.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-fr.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-gl.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-he.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-hr.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-hr1250.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-hu.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-id.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-is.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-it.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-ja.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-kr.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-lt.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-mne.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-nl.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-no.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-pl.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-pt-br.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-pt.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-ro.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-ru.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-sk.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-sr.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-sv.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-th.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-tr.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-tw.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-ua.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\i18n\grid.locale-vi.js" />
+    <Content Include="Content\Bootstrap\js\jqGrid\jquery.jqGrid.src.js" />
+    <Content Include="Content\Bootstrap\js\jquery-ui.custom.js" />
+    <Content Include="Content\Bootstrap\js\jquery-ui.js" />
+    <Content Include="Content\Bootstrap\js\jquery.autosize.js" />
+    <Content Include="Content\Bootstrap\js\jquery.bootstrap-duallistbox.js" />
+    <Content Include="Content\Bootstrap\js\jquery.colorbox.js" />
+    <Content Include="Content\Bootstrap\js\jquery.easypiechart.js" />
+    <Content Include="Content\Bootstrap\js\jquery.gritter.js" />
+    <Content Include="Content\Bootstrap\js\jquery.hotkeys.js" />
+    <Content Include="Content\Bootstrap\js\jquery.inputlimiter.1.3.1.js" />
+    <Content Include="Content\Bootstrap\js\jquery.js" />
+    <Content Include="Content\Bootstrap\js\jquery.knob.js" />
+    <Content Include="Content\Bootstrap\js\jquery.maskedinput.js" />
+    <Content Include="Content\Bootstrap\js\jquery.min.js" />
+    <Content Include="Content\Bootstrap\js\jquery.mobile.custom.js" />
+    <Content Include="Content\Bootstrap\js\jquery.mousewheel.js" />
+    <Content Include="Content\Bootstrap\js\jquery.nestable.js" />
+    <Content Include="Content\Bootstrap\js\jquery.raty.js" />
+    <Content Include="Content\Bootstrap\js\jquery.slimscroll.js" />
+    <Content Include="Content\Bootstrap\js\jquery.sparkline.js" />
+    <Content Include="Content\Bootstrap\js\jquery.ui.touch-punch.js" />
+    <Content Include="Content\Bootstrap\js\jquery.validate.js" />
+    <Content Include="Content\Bootstrap\js\jquery1x.js" />
+    <Content Include="Content\Bootstrap\js\jquery_ui.custom.js" />
+    <Content Include="Content\Bootstrap\js\language\css.js" />
+    <Content Include="Content\Bootstrap\js\language\generic.js" />
+    <Content Include="Content\Bootstrap\js\language\html.js" />
+    <Content Include="Content\Bootstrap\js\language\javascript.js" />
+    <Content Include="Content\Bootstrap\js\language\php.js" />
+    <Content Include="Content\Bootstrap\js\markdown\bootstrap-markdown.js" />
+    <Content Include="Content\Bootstrap\js\markdown\markdown.js" />
+    <Content Include="Content\Bootstrap\js\markdown\to-markdown.js" />
+    <Content Include="Content\Bootstrap\js\pace.js" />
+    <Content Include="Content\Bootstrap\js\prettify.js" />
+    <Content Include="Content\Bootstrap\js\rainbow.js" />
+    <Content Include="Content\Bootstrap\js\rainbow.min.js" />
+    <Content Include="Content\Bootstrap\js\respond.js" />
+    <Content Include="Content\Bootstrap\js\select2.js" />
+    <Content Include="Content\Bootstrap\js\spin.js" />
+    <Content Include="Content\Bootstrap\js\themes\all-hallows-eve.css" />
+    <Content Include="Content\Bootstrap\js\themes\blackboard.css" />
+    <Content Include="Content\Bootstrap\js\themes\dreamweaver.css" />
+    <Content Include="Content\Bootstrap\js\themes\espresso-libre.css" />
+    <Content Include="Content\Bootstrap\js\themes\github.css" />
+    <Content Include="Content\Bootstrap\js\themes\kimbie-dark.css" />
+    <Content Include="Content\Bootstrap\js\themes\kimbie-light.css" />
+    <Content Include="Content\Bootstrap\js\themes\monokai.css" />
+    <Content Include="Content\Bootstrap\js\themes\obsidian.css" />
+    <Content Include="Content\Bootstrap\js\themes\paraiso-dark.css" />
+    <Content Include="Content\Bootstrap\js\themes\paraiso-light.css" />
+    <Content Include="Content\Bootstrap\js\themes\pastie.css" />
+    <Content Include="Content\Bootstrap\js\themes\solarized-dark.css" />
+    <Content Include="Content\Bootstrap\js\themes\solarized-light.css" />
+    <Content Include="Content\Bootstrap\js\themes\sunburst.css" />
+    <Content Include="Content\Bootstrap\js\themes\tomorrow-night.css" />
+    <Content Include="Content\Bootstrap\js\themes\tricolore.css" />
+    <Content Include="Content\Bootstrap\js\themes\twilight.css" />
+    <Content Include="Content\Bootstrap\js\themes\zenburnesque.css" />
+    <Content Include="Content\Bootstrap\js\typeahead.jquery.js" />
+    <Content Include="Content\Bootstrap\js\x-editable\ace-editable.js" />
+    <Content Include="Content\Bootstrap\js\x-editable\bootstrap-editable.js" />
+    <Content Include="Content\js\additional-methods.js" />
+    <Content Include="Content\js\additional-methods.min.js" />
+    <Content Include="Content\js\ajaxresult.js" />
+    <Content Include="Content\js\bootbox.min.js" />
+    <Content Include="Content\js\bootstrap-select.js" />
+    <Content Include="Content\js\bootstrap-switch.min.js" />
+    <Content Include="Content\Bootstrap\js\collapsible-icon.js" />
+    <Content Include="Content\js\common.js" />
+    <Content Include="Content\js\datepicker-lib.js" />
+    <Content Include="Content\js\dropzone.js" />
+    <Content Include="Content\js\jquery-msgbox\img\alert.png" />
+    <Content Include="Content\js\jquery-msgbox\img\confirm.png" />
+    <Content Include="Content\js\jquery-msgbox\img\error.png" />
+    <Content Include="Content\js\jquery-msgbox\img\info.png" />
+    <Content Include="Content\js\jquery-msgbox\img\msgBoxBackGround.png" />
+    <Content Include="Content\js\jquery-msgbox\img\ok.png" />
+    <Content Include="Content\js\jquery-msgbox\jquery.msgBox.js" />
+    <Content Include="Content\js\jquery-msgbox\jquery.msgBoxLight.css" />
+    <Content Include="Content\js\jquery.are-you-sure.js" />
+    <Content Include="Content\js\jquery.blockUI.js" />
+    <Content Include="Content\js\jquery.cookie.js" />
+    <Content Include="Content\js\jQuery.flashMessage.js" />
+    <Content Include="Content\js\jquery.form.js" />
+    <Content Include="Content\js\jquery.validate.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\moment.min.js" />
+    <Content Include="Content\js\PersonalProfile.js" />
+    <Content Include="Content\js\PublishDocument.js" />
+    <Content Include="Content\js\uses.js" />
+    <Content Include="Content\js\uses.min.js" />
+    <Content Include="Content\tdk\autosize\jquery.autosize.js" />
+    <Content Include="Content\tdk\autosize\jquery.autosize.min.js" />
+    <Content Include="Content\tdk\bootstrap-tags.css" />
+    <Content Include="Content\tdk\bootstrap-tags.js" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap-switch.min.css" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap-theme-cerulean.css" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\tdk\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\tdk\bootstrap\css\dataTables.bootstrap.css" />
+    <Content Include="Content\tdk\bootstrap\css\datepicker.css" />
+    <Content Include="Content\tdk\bootstrap\css\datepicker3.css" />
+    <Content Include="Content\tdk\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap-datepicker.js" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap-filestyle.min.js" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap.file-input.js" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\tdk\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\tdk\bootstrap\js\dataTables.bootstrap.js" />
+    <Content Include="Content\tdk\bootstrap\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\tdk\bootstrap\js\locales\bootstrap-datepicker.id.js" />
+    <Content Include="Content\tdk\bootstrap\js\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Content\tdk\calendar-template\day.html" />
+    <Content Include="Content\tdk\calendar-template\events-list.html" />
+    <Content Include="Content\tdk\calendar-template\modal.html" />
+    <Content Include="Content\tdk\calendar-template\month-day.html" />
+    <Content Include="Content\tdk\calendar-template\month.html" />
+    <Content Include="Content\tdk\calendar-template\week-days.html" />
+    <Content Include="Content\tdk\calendar-template\week.html" />
+    <Content Include="Content\tdk\calendar-template\year-month.html" />
+    <Content Include="Content\tdk\calendar-template\year.html" />
+    <Content Include="Content\tdk\calendar.css" />
+    <Content Include="Content\tdk\calendar.js" />
+    <Content Include="Content\tdk\datepicker.css" />
+    <Content Include="Content\tdk\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Content\tdk\datepicker\datepicker.css" />
+    <Content Include="Content\tdk\dropzone.css" />
+    <Content Include="Content\tdk\enscroll.js" />
+    <Content Include="Content\tdk\filedownload\jquery.fileDownload.js" />
+    <Content Include="Content\tdk\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\tdk\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\tdk\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\tdk\html5shiv.min.js" />
+    <Content Include="Content\tdk\img\anonymous-user.png" />
+    <Content Include="Content\tdk\img\document.png" />
+    <Content Include="Content\tdk\img\email.png" />
+    <Content Include="Content\tdk\img\event.png" />
+    <Content Include="Content\tdk\img\favicon1.ico" />
+    <Content Include="Content\tdk\img\home\appraisal-1-gray.png" />
+    <Content Include="Content\tdk\img\home\appraisal-1.png" />
+    <Content Include="Content\tdk\img\home\appraisal-2.png" />
+    <Content Include="Content\tdk\img\home\attendance-1-gray.png" />
+    <Content Include="Content\tdk\img\home\attendance-1.png" />
+    <Content Include="Content\tdk\img\home\attendance-2.png" />
+    <Content Include="Content\tdk\img\home\bdjk-1-gray.png" />
+    <Content Include="Content\tdk\img\home\bdjk-1.png" />
+    <Content Include="Content\tdk\img\home\bdjk-2.png" />
+    <Content Include="Content\tdk\img\home\compdir-1.png" />
+    <Content Include="Content\tdk\img\home\compdir-2.png" />
+    <Content Include="Content\tdk\img\home\document-1.png" />
+    <Content Include="Content\tdk\img\home\document-2.png" />
+    <Content Include="Content\tdk\img\home\leave-1-gray.png" />
+    <Content Include="Content\tdk\img\home\leave-1.png" />
+    <Content Include="Content\tdk\img\home\leave-2.png" />
+    <Content Include="Content\tdk\img\home\otactual-1-gray.png" />
+    <Content Include="Content\tdk\img\home\otactual-1.png" />
+    <Content Include="Content\tdk\img\home\otactual-2.png" />
+    <Content Include="Content\tdk\img\home\otplan-1-gray.png" />
+    <Content Include="Content\tdk\img\home\otplan-1.png" />
+    <Content Include="Content\tdk\img\home\otplan-2.png" />
+    <Content Include="Content\tdk\img\home\profile-1.png" />
+    <Content Include="Content\tdk\img\home\profile-2.png" />
+    <Content Include="Content\tdk\img\home\question-1.png" />
+    <Content Include="Content\tdk\img\home\recruitment-1-gray.png" />
+    <Content Include="Content\tdk\img\home\recruitment-1.png" />
+    <Content Include="Content\tdk\img\home\recruitment-2.png" />
+    <Content Include="Content\tdk\img\home\report-1-gray.png" />
+    <Content Include="Content\tdk\img\home\report-1.png" />
+    <Content Include="Content\tdk\img\home\report-2.png" />
+    <Content Include="Content\tdk\img\home\wellfare-1-gray.png" />
+    <Content Include="Content\tdk\img\home\wellfare-1.png" />
+    <Content Include="Content\tdk\img\home\wellfare-2.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\tdk\img\jquery-ui\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\tdk\img\login\etios.jpg" />
+    <Content Include="Content\tdk\img\login\innova.jpg" />
+    <Content Include="Content\tdk\img\login\skulls.png" />
+    <Content Include="Content\tdk\img\login\vios.jpg" />
+    <Content Include="Content\tdk\img\login\yaris.jpg" />
+    <Content Include="Content\tdk\jquery-ui.css" />
+    <Content Include="Content\tdk\jquery-ui.min.js" />
+    <Content Include="Content\tdk\jquery.bootstrap-growl.js" />
+    <Content Include="Content\tdk\jquery.bootstrap-growl.min.js" />
+    <Content Include="Content\tdk\jquery.dataTables.css" />
+    <Content Include="Content\tdk\jquery.dataTables.js" />
+    <Content Include="Content\tdk\jquery.dataTables.min.css" />
+    <Content Include="Content\tdk\jquery.dataTables.min.js" />
+    <Content Include="Content\tdk\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\tdk\jquery.filedownload.js" />
+    <Content Include="Content\tdk\jquery.js" />
+    <Content Include="Content\tdk\jquery.min.js" />
+    <Content Include="Content\tdk\jquery.numeric.js" />
+    <Content Include="Content\tdk\jquery.popconfirm.js" />
+    <Content Include="Content\tdk\jquery.popconfirm.min.js" />
+    <Content Include="Content\tdk\jquery.validate.additional.js" />
+    <Content Include="Content\tdk\jquery.validate.js" />
+    <Content Include="Content\tdk\login.css" />
+    <Content Include="Content\tdk\prism.css" />
+    <Content Include="Content\tdk\respond.min.js" />
+    <Content Include="Content\tdk\summernote-bs3.css" />
+    <Content Include="Content\tdk\summernote.css" />
+    <Content Include="Content\tdk\summernote.js" />
+    <Content Include="Content\tdk\tdk.bootstrap-theme.css" />
+    <Content Include="Content\tdk\tdk.bootstrap.css" />
+    <Content Include="Content\tdk\tdk.bootstrap.js" />
+    <Content Include="Content\tdk\tdk.js" />
+    <Content Include="Content\tdk\theme\css\anim.css" />
+    <Content Include="Content\tdk\theme\css\metisMenu.css" />
+    <Content Include="Content\tdk\theme\css\metisMenu.min.css" />
+    <Content Include="Content\tdk\theme\css\sb-admin-2.css" />
+    <Content Include="Content\tdk\theme\css\typeahead.css" />
+    <Content Include="Content\tdk\theme\js\metisMenu.js" />
+    <Content Include="Content\tdk\theme\js\metisMenu.min.js" />
+    <Content Include="Content\tdk\theme\js\sb-admin-2.js" />
+    <Content Include="Content\tdk\timepicker\bootstrap-timepicker.css" />
+    <Content Include="Content\tdk\timepicker\bootstrap-timepicker.js" />
+    <Content Include="Content\tdk\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Content\tdk\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Content\tdk\typeahead.js" />
+    <Content Include="Content\tdk\typeahead.min.js" />
+    <Content Include="Content\tdk\underscore.js" />
+    <Content Include="Content\UI\angulerGridster\angular-gridster.js" />
+    <Content Include="Content\UI\angulerGridster\angular-gridster.min.css" />
+    <Content Include="Content\UI\angulerGridster\angular.js" />
+    <Content Include="Content\UI\angulerGridster\angular-gridster-script.js" />
+    <Content Include="Content\UI\chart.js" />
+    <Content Include="Content\UI\html5shiv.min.js" />
+    <Content Include="Content\UI\jquery.cookie.js" />
+    <Content Include="Content\UI\jquery.min.js" />
+    <Content Include="Content\UI\metisMenu.js" />
+    <Content Include="Content\UI\metisMenu.min.js" />
+    <Content Include="Content\UI\morris\morris-data.js" />
+    <Content Include="Content\UI\morris\morris.css" />
+    <Content Include="Content\UI\morris\morris.js" />
+    <Content Include="Content\UI\morris\morris.min.js" />
+    <Content Include="Content\UI\morris\raphael.min.js" />
+    <Content Include="Content\UI\respond.min.js" />
+    <Content Include="Content\UI\sb-admin-2.js" />
+    <Content Include="Content\UI\timeline\timeline.css" />
+    <Content Include="Content\UI\tourist\backbone-1.0.0.js" />
+    <Content Include="Content\UI\tourist\jquery.qtip.css" />
+    <Content Include="Content\UI\tourist\jquery.qtip.js" />
+    <Content Include="Content\UI\tourist\tourist.css" />
+    <Content Include="Content\UI\tourist\tourist.js" />
+    <Content Include="Content\UI\tourist\tourist.min.js" />
+    <Content Include="Content\UI\underscore-min.js" />
+    <Content Include="Content\UI\uses.js" />
+    <Content Include="Global.asax" />
+    <Content Include="SQL\PakAnas\Pakanas_Search.sql" />
+    <Content Include="SQL\PakAnas\Pakanas_SearchCount.sql" />
+    <Content Include="SQL\PakAnas\_InsertUpdate.sql" />
+    <Content Include="Tdk-Lib\EPPlus.dll" />
+    <Content Include="Tdk-Lib\EPPlus.XML" />
+    <Content Include="Tdk-Lib\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Tdk-Lib\NPOI.dll" />
+    <Content Include="Tdk-Lib\NPOI.OOXML.dll" />
+    <Content Include="Tdk-Lib\NPOI.OpenXml4Net.dll" />
+    <Content Include="Tdk-Lib\NPOI.OpenXmlFormats.dll" />
+    <Content Include="Tdk-Lib\NPOI.xml" />
+    <Content Include="Tdk-Lib\ServiceStack.Text.dll" />
+    <Content Include="Tdk-Lib\System.Web.Helpers.dll" />
+    <Content Include="Tdk-Lib\System.Web.Helpers.xml" />
+    <Content Include="Tdk-Lib\System.Web.Mvc.dll" />
+    <Content Include="Tdk-Lib\System.Web.Razor.dll" />
+    <Content Include="Tdk-Lib\System.Web.Razor.xml" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.Administration.dll" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.Deployment.dll" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.Deployment.xml" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.dll" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.Razor.dll" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.Razor.xml" />
+    <Content Include="Tdk-Lib\System.Web.WebPages.xml" />
+    <Content Include="Tdk-Lib\Toyota.Common.Broadcasting.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Configuration.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Credential.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Credential.Provider.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Credential.SingleSignOn.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Database.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Database.Petapoco.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.DataExchange.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Document.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Document.NPOI.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Generalist.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Logging.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Lookup.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Messaging.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Reporting.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Reporting.Services.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Security.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.SSO.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Task.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Task.External.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Utilities.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Web.Platform.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Web.Service.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Web.UI.Layout.dll" />
+    <Content Include="Tdk-Lib\Toyota.Common.Workflow.dll" />
+    <Content Include="Tdk-Lib\VisitorCounter.dll" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configurations\Database-DEV.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\Locale-US.config" />
+    <Content Include="Configurations\SingleSignOn-DEV.config" />
+    <Content Include="Configurations\System.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\Database-LOCAL.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\SingleSignOn-LOCAL.config" />
+    <Content Include="Configurations\Database-WOT.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\SingleSignOn-WOT.config" />
+    <None Include="Content\Bootstrap\css\less\ace-features.less" />
+    <None Include="Content\Bootstrap\css\less\ace-nav.less" />
+    <None Include="Content\Bootstrap\css\less\ace-responsive.less" />
+    <None Include="Content\Bootstrap\css\less\ace-rtl.less" />
+    <None Include="Content\Bootstrap\css\less\ace.less" />
+    <None Include="Content\Bootstrap\css\less\basic.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\alerts.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\badges.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\bootstrap.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\breadcrumbs.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\button-groups.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\buttons.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\carousel.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\close.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\code.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\component-animations.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\dropdowns.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\forms.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\glyphicons.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\grid.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\input-groups.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\jumbotron.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\labels.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\list-group.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\media.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\alerts.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\background-variant.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\border-radius.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\buttons.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\center-block.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\clearfix.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\forms.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\gradients.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\grid-framework.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\grid.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\hide-text.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\image.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\labels.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\list-group.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\nav-divider.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\nav-vertical-align.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\opacity.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\pagination.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\panels.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\progress-bar.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\reset-filter.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\resize.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\responsive-visibility.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\size.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\tab-focus.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\table-row.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\text-emphasis.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\text-overflow.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\mixins\vendor-prefixes.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\modals.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\navbar.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\navs.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\normalize.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\pager.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\pagination.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\panels.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\popovers.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\print.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\progress-bars.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\responsive-embed.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\responsive-utilities.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\scaffolding.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\tables.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\theme.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\thumbnails.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\tooltip.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\type.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\utilities.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\variables.less" />
+    <None Include="Content\Bootstrap\css\less\bootstrap\wells.less" />
+    <None Include="Content\Bootstrap\css\less\breadcrumbs.less" />
+    <None Include="Content\Bootstrap\css\less\bs3-reset.less" />
+    <None Include="Content\Bootstrap\css\less\buttons.less" />
+    <None Include="Content\Bootstrap\css\less\dropdown.less" />
+    <None Include="Content\Bootstrap\css\less\dropdown\colorpicker.less" />
+    <None Include="Content\Bootstrap\css\less\dropdown\navbar-dropdown.less" />
+    <None Include="Content\Bootstrap\css\less\dropdown\navbar-tabbed-dropdown.less" />
+    <None Include="Content\Bootstrap\css\less\ext\bootstrap-tag.less" />
+    <None Include="Content\Bootstrap\css\less\fonts-rel.less" />
+    <None Include="Content\Bootstrap\css\less\fonts.less" />
+    <None Include="Content\Bootstrap\css\less\footer.less" />
+    <None Include="Content\Bootstrap\css\less\form.less" />
+    <None Include="Content\Bootstrap\css\less\form\checkbox.less" />
+    <None Include="Content\Bootstrap\css\less\form\file.less" />
+    <None Include="Content\Bootstrap\css\less\gallery.less" />
+    <None Include="Content\Bootstrap\css\less\general.less" />
+    <None Include="Content\Bootstrap\css\less\icon-animated.less" />
+    <None Include="Content\Bootstrap\css\less\infobox.less" />
+    <None Include="Content\Bootstrap\css\less\items.less" />
+    <None Include="Content\Bootstrap\css\less\label-badge.less" />
+    <None Include="Content\Bootstrap\css\less\mixins.less" />
+    <None Include="Content\Bootstrap\css\less\modal.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\collapsible.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\navbar-menu-form.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\toggle-button.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\user-buttons-move-down.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\user-buttons.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\user-dropdown-position.less" />
+    <None Include="Content\Bootstrap\css\less\navbar\user-menu.less" />
+    <None Include="Content\Bootstrap\css\less\onpage-help.less" />
+    <None Include="Content\Bootstrap\css\less\other.less" />
+    <None Include="Content\Bootstrap\css\less\page.error.less" />
+    <None Include="Content\Bootstrap\css\less\page.inbox.less" />
+    <None Include="Content\Bootstrap\css\less\page.invoice.less" />
+    <None Include="Content\Bootstrap\css\less\page.login.less" />
+    <None Include="Content\Bootstrap\css\less\page.pricing.less" />
+    <None Include="Content\Bootstrap\css\less\page.profile.less" />
+    <None Include="Content\Bootstrap\css\less\page.timeline.less" />
+    <None Include="Content\Bootstrap\css\less\print.less" />
+    <None Include="Content\Bootstrap\css\less\progressbar.less" />
+    <None Include="Content\Bootstrap\css\less\scroll.less" />
+    <None Include="Content\Bootstrap\css\less\searchbox.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\active.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\compact.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\ff_fix.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\highlight.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\horizontal.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\hover.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\min.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\multiple.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\old-toggle-button.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\responsive-1.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\responsive-2.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\responsive-3.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\shortcuts-toggle.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\sidebar-fixed.less" />
+    <None Include="Content\Bootstrap\css\less\sidebar\sub-arrow.less" />
+    <None Include="Content\Bootstrap\css\less\skins\empty.less" />
+    <None Include="Content\Bootstrap\css\less\skins\no-skin.less" />
+    <None Include="Content\Bootstrap\css\less\skins\skin-1.less" />
+    <None Include="Content\Bootstrap\css\less\skins\skin-2.less" />
+    <None Include="Content\Bootstrap\css\less\skins\skin-3.less" />
+    <None Include="Content\Bootstrap\css\less\skins\skins.less" />
+    <None Include="Content\Bootstrap\css\less\tab-accordion.less" />
+    <None Include="Content\Bootstrap\css\less\tables.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-calendar.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-chosen.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-colorbox.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-dataTables.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-date.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-dropzone.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-duallist-multiselect.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-editable.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-fuelux.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-gritter.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-jqgrid.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-jquery-ui.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-nestable.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-raty.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-select2.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-slider.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-typeahead.less" />
+    <None Include="Content\Bootstrap\css\less\thirdparty-wysiwyg.less" />
+    <None Include="Content\Bootstrap\css\less\tooltip-popover.less" />
+    <None Include="Content\Bootstrap\css\less\utility.less" />
+    <None Include="Content\Bootstrap\css\less\variables.less" />
+    <None Include="Content\Bootstrap\css\less\widget.less" />
+    <Content Include="Content\Bootstrap\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Bootstrap\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Bootstrap\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Bootstrap\fonts\FontAwesome.otf" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Bootstrap\fonts\leaguespartan-bold.eot" />
+    <Content Include="Content\Bootstrap\fonts\leaguespartan-bold.ttf" />
+    <Content Include="Content\Bootstrap\fonts\leaguespartan-bold.woff" />
+    <Content Include="Content\Bootstrap\fonts\leaguespartan-bold.woff2" />
+    <Content Include="Content\Bootstrap\fonts\OpenSans-300.woff" />
+    <Content Include="Content\Bootstrap\fonts\OpenSans-400.woff" />
+    <None Include="Content\Bootstrap\fonts\readme" />
+    <None Include="Content\Bootstrap\js\ace\readme" />
+    <None Include="Content\Bootstrap\js\ace\scripts.json" />
+    <None Include="Content\tdk\bootstrap\css\bootstrap-theme.css.map" />
+    <None Include="Content\tdk\bootstrap\css\bootstrap.css.map" />
+    <None Include="Content\tdk\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Content\tdk\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Content\tdk\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Content\tdk\font-awesome\fonts\fontawesome-webfont.eot" />
+    <None Include="Content\tdk\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <None Include="Content\tdk\font-awesome\fonts\fontawesome-webfont.woff" />
+    <None Include="Content\tdk\font-awesome\fonts\FontAwesome.otf" />
+    <None Include="Content\tdk\font-awesome\less\bordered-pulled.less" />
+    <None Include="Content\tdk\font-awesome\less\core.less" />
+    <None Include="Content\tdk\font-awesome\less\fixed-width.less" />
+    <None Include="Content\tdk\font-awesome\less\font-awesome.less" />
+    <None Include="Content\tdk\font-awesome\less\icons.less" />
+    <None Include="Content\tdk\font-awesome\less\larger.less" />
+    <None Include="Content\tdk\font-awesome\less\list.less" />
+    <None Include="Content\tdk\font-awesome\less\mixins.less" />
+    <None Include="Content\tdk\font-awesome\less\path.less" />
+    <None Include="Content\tdk\font-awesome\less\rotated-flipped.less" />
+    <None Include="Content\tdk\font-awesome\less\spinning.less" />
+    <None Include="Content\tdk\font-awesome\less\stacked.less" />
+    <None Include="Content\tdk\font-awesome\less\variables.less" />
+    <None Include="Content\tdk\font-awesome\scss\font-awesome.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_bordered-pulled.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_core.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_fixed-width.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_icons.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_larger.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_list.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_mixins.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_path.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_rotated-flipped.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_spinning.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_stacked.scss" />
+    <None Include="Content\tdk\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\Home\_WidgetSettings.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\HeaderMenu.cshtml" />
+    <Content Include="Views\Shared\HorizontalMenu.cshtml" />
+    <Content Include="Views\Shared\VerticalMenu.cshtml" />
+    <Content Include="Views\Shared\_About.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LayoutTop.cshtml" />
+    <Content Include="Views\Shared\_PaginatorBottom.cshtml" />
+    <Content Include="Views\Shared\_PaginatorTop.cshtml" />
+    <Content Include="Views\Shared\_TourPlugin.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\_Agreement.cshtml" />
+    <Content Include="Views\Login\_Carousel.cshtml" />
+    <Content Include="Views\PakAnas\_GridView.cshtml" />
+    <Content Include="Views\PakAnas\PakAnas.cshtml" />
+    <Content Include="Views\PakAnas\_Search_Criteria.cshtml" />
+    <Content Include="Views\PakAnas\_ModalAddEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\Assemblies\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.0.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.0.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.0.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.0.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.14.0, Culture=neutral, PublicKeyToken=1bf8b2f6523e7dbd, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Tdk-Lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Administration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.WebPages.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>Tdk-Lib\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Toyota.Common.Broadcasting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Configuration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Credential, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Credential.Provider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Credential.SingleSignOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Database.Petapoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.DataExchange, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Document, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Document.NPOI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Toyota.Common.Generalist, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Lookup, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Reporting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Reporting.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.SSO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Task, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Task.External, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Web.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Web.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Web.UI.Layout, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Toyota.Common.Workflow, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="VisitorCounter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60452</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

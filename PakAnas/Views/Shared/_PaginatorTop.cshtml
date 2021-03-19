@@ -1,0 +1,32 @@
+﻿@using PakAnas.Commons.Models
+
+@model PagingModel
+@{
+    PagingModel pm = Model;
+    if (pm == null)
+    {
+        pm = new PagingModel();
+    }
+}
+
+<div class="form-inline">
+    @*
+    <label class="form-inline">
+        Show per page
+        <select class="form-control" id="recordPerPage@(pm.IdSuffix)">
+        @for (int i = 0; i < PagingModel.RECORD_PER_PAGES.Length; i++)
+        {
+            <option>@PagingModel.RECORD_PER_PAGES[i]</option>
+        }
+        </select>
+    </label>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#recordPerPage@(pm.IdSuffix)").val("@pm.RecordPerPage");
+            $("#recordPerPage@(pm.IdSuffix)").change(function (event) {
+                onSearchCriteria@(pm.IdSuffix)($("#txtCurrentPage@(pm.IdSuffix)").val());
+            });
+        });
+    </script>
+    *@
+</div>

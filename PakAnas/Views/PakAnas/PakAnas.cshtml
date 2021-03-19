@@ -1,0 +1,142 @@
+﻿@using System;
+@using PakAnas.Commons.Constants;
+@using PakAnas.Models;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+@Html.Partial("_Search_Criteria")
+
+
+<div id="divGrid">
+    @Html.Partial("_GridView")
+</div>
+
+@Html.Partial("_ModalAddEdit")
+
+
+@section BodyScript{
+
+    <!-- Modal Upload js -->
+    @*<script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/dropzone.js")"></script>*@
+    <!-- Bootstrap Datepicker js -->
+    @*<script type="text/javascript" src="@Url.Content("~/Content/js/FixedTable.js")"></script>>
+    <script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/jquery.min.js")"></script>>*@
+    @*<script type="text/javascript" src="@Url.Content("~/Content/tdk/jquery.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/js/freezeTable.js")"></script>*@
+    <script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/date-time/bootstrap-datepicker.js")"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            datepicker.init();
+
+            //freezeTable.init();
+            //freezeScroll();
+        });
+
+        var datepicker = {
+            init: function () {
+                $('.datepicker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true,
+                    format: 'dd-M-yyyy'
+                });
+            }
+        };
+
+
+        function btnSearch_onClick() {
+            console.log('a');
+            onSearchCriteria(1);
+        }
+
+        function onSearchCriteria(page) {
+            //alert("anying");
+
+            $.ajax({
+                type: "POST",
+                url: "@Html.Toyota().Page.GetActionUrl("Search")",
+                data: {          
+                    org_code: $("#txtSearchorg_code").val(),
+                    org_name: $("#txtSearchorg_name").val(),
+                    recordPerPage: $("#recordPerPage").val(),
+                    currentPage: page
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#divGrid").html(data);
+                    popUpProgressHide();
+                },
+                error: function (data) {
+                    console.log(data);
+                    popUpProgressHide();
+                }
+            });
+        }
+
+
+        function btnAdd_onClick() {
+            setScreenToAddMode();
+            $("#modalAddEdit").modal();
+        }
+
+
+        function setScreenToAddMode() {
+            clearAddEdit();
+            gScreenMode = '@CommonConstant.SCREEN_MODE_ADD';
+
+            $("#txtAddEditorg_code").prop('disabled', false);
+            $("#txtAddEditorg_name").prop('disabled', false);
+ 
+        }
+
+        function clearAddEdit() {
+            gOrgEdit = 0;
+
+            $("#txtAddEditorg_code").val('');
+            $("#txtAddEditorg_name").val('');
+
+        }
+
+        //$('#btnSave').click(function () {
+        //    if (validation() != 1) {
+        //        var params = new Object();
+        //        var data = new Object();
+
+        //        params.screenMode = gScreenMode;
+        //        params.data = data;
+
+        //        data.org_code = $("#txtAddEditorg_code").val();
+        //        data.org_name = $("#txtAddEditorg_name").val();
+
+        //        $.ajax({
+        //        type
+        //        }
+
+        //    }
+        //});
+        // Process save edit [Start]
+        function validation() {
+            var flagErr = 0;
+            
+            var org_code = $("#txtAddEditorg_code").val();
+            var org_name = $("#txtAddEditorg_name").val();
+
+            if (org_code == null || org_code == '') {
+                showErrorMesgGrowl('ERROR JS: org code No should not be empty');
+                return flagErr = 1
+            }
+            if (org_name == null || org_name == '') {
+                showErrorMesgGrowl('ERROR JS: org name No should not be empty');
+                return flagErr = 1
+            }
+
+            return flagErr
+        }
+        
+    </script>
+}

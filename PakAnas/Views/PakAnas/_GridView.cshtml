@@ -1,0 +1,71 @@
+﻿@using System;
+@using PakAnas.Controllers;
+@using PakAnas.Models.PakAnas;
+@using PakAnas.Commons.Models
+
+
+@{  
+    IList<PakAnass> listData = (List < PakAnass >) ViewData["ListDatapakanas"];
+    //PagingModel _PaginatorBottom = new ViewData[
+     }
+
+<div class="afixed-main-container" id="main-container" style="height:300px">
+    <div class="table-responsive _table-flow-2 
+            afixed-table-container" id="generalDataTable-container">
+        <div class="afixed-table-viewport" id="generalDataTable-viewport"></div>
+        
+        <table class="table table-bordered table-condensed 
+                table-stripped afixed-table" id="generalDataTable">
+
+            <thead>
+                <tr class="afixed-header" id="generalDataTable-header">
+                    <th class="grid-checkbox-col afixed-column" rowspan="2" style="width:30px">
+                        <input class="grid-checkbox" type="checkbox" id="checkall" />
+                    </th>
+                    <th class="afixed-column" style="width:90px" rowspan="2">org_code</th>
+                    <th class="afixed-column" style="width:200px" rowspan="2">org_name</th>
+                    <th style="width:160px" colspan="2">Created</th>
+                    <th style="width:160px" colspan="2">Changed</th>
+                </tr>
+                <tr class="afixed-header" id="generalDataTable-header2">
+					<th style="width:80px;">By</th>
+					<th style="width:80px;">Date</th>
+					<th style="width:80px;">By</th>
+					<th style="width:80px;">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+              @if (listData == null || listData.Count == 0)
+                {
+                    <tr>
+                        <td colspan="13">No Data Found</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (PakAnass data in listData)
+                    {
+                        <tr>
+                            <td style="width:30px" class="text-center grid-checkbox-col afixed-column">
+                                <input name="chkRow" type="checkbox" class="grid-checkbox grid-checkbox-body" 
+                                    data-employeeId="" />
+                            </td>
+                            <td style="width:90px">@data.org_code</td>
+                            <td style="width:200px">@data.org_name</td>
+                            
+                    
+                            
+                            <td style="width:80px" align="center">@data.create_by</td>
+                            <td style="width:80px" align="center">@data.create_on</td>
+                            <td style="width:80px" align="center">@data.CHANGED_BY</td>
+                            <td style="width:80px" align="center">@data.CHANGED_DT</td>
+                        </tr>
+                  }
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_PaginatorBottom", (PagingModel)ViewData["Paging"])

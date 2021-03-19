@@ -1,0 +1,54 @@
+﻿<div class="modal fade" id="modalAddEdit" tabindex="-1" role="dialog" aria-lavelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-tittle">Add/Edit @Html.Toyota().Page.Title</h4>
+                <br />
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form role="form" class="form-horizontal" id="formAddEdit">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <div class="form-group form-group-xs">
+                                <div class="form-group form-group-xs">
+                                    <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">org_code</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-8">
+                                        <div class="input-group input-group-xs">
+                                            <input class="form-control" id="txtAddEditorg_code" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-12">
+                            <div class="form-group form-group-xs">
+                                <div class="form-group form-group-xs">
+                                    <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">org_name</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-8">
+                                        <div class="input-group input-group-xs">
+                                            <input class="form-control " id="txtAddEditorg_name" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <div class="col-xs-12 text-right">
+                    <button type="submit" class="btn btn-xs btn-primary" id="btnSave">Save</button>
+                    <button type="button" class="btn btn-xs btn-danger" id="btnCancel" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

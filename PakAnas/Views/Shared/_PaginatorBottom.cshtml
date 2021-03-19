@@ -1,0 +1,165 @@
+﻿@using PakAnas.Commons.Models
+
+@model PagingModel
+@{
+    PagingModel pm = Model;
+    if (pm == null)
+    {
+        pm= new PagingModel();
+    }
+}
+
+<div class="row" style="margin-top:10px;">
+ <div class="col-sm-6 col-md-8">
+    <div class="form-inline"> 
+        <div class="form-group page-ori">
+            <nav>
+              <ul class="pagination pagination-sm">
+                 <input type="hidden" id="txtCurrentPage@(pm.IdSuffix)" value="@pm.PositionPage" />
+                <li>
+                    <span>Showing @pm.Start to @if (pm.CountData >= pm.End){ @pm.End } else { @pm.CountData } of @pm.CountData row(s)</span>            
+                </li>
+                 @if (pm.IndexList.Count > 0)
+                    {
+                            <li>
+                                <a class='pagination-theme' href="javascript:onSearchCriteria@(pm.IdSuffix)(@pm.IndexList[0])">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        foreach (int i in pm.IndexList)
+                        {
+                            if (i < pm.PositionPage - 2 || i > pm.PositionPage + 2)
+                            {
+                            }
+                            else
+                            {
+                             <li>
+                                <a  @if(i == pm.PositionPage)
+                                    { 
+                                       <text>style='background-color: #428bca; color:#FFFFFF;' class='pagination-active-theme text-muted'")</text> 
+                                    }
+                                    else
+                                    { 
+                                        <text>class='pagination-theme'")</text> 
+                                    } href="javascript:onSearchCriteria@(pm.IdSuffix)(@i)">@i</a
+                             </li>
+                            }
+                        }
+                         
+                        <li>
+                            <a class='pagination-theme text-muted' href="javascript:onSearchCriteria@(pm.IdSuffix)(@pm.IndexList[pm.IndexList.Count - 1])">            
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    }         
+              </ul>
+            </nav>
+        </div>
+        <div class="form-group" style="padding-bottom:6px;">                                             
+             <input class="form-control" style="width: 50px;height:34px;margin-left:10px;margin-right:0;" type="text" id="txtPagingGo@(pm.IdSuffix)" name="txtPagingGo@(pm.IdSuffix)" @if (@pm.IndexList.Count == 0) { WriteLiteral("readonly"); } />
+               
+             <button type="button" id="btnPagingGo@(pm.IdSuffix)" class="btn btn-xs btn-primary" style="margin-left:-3px;" onclick="javascript:pagingGo@(pm.IdSuffix)()" @if (@pm.IndexList.Count == 0) { WriteLiteral("disabled"); }>Go</button>               
+         </div>  
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-4">
+        <div class="form-group text-right">
+            <label class="control-label text-muted" style="margin:5px 5px 0 0;">
+                Show per page
+            </label>
+            <div class="pull-right">            
+                <select class="form-control" id="recordPerPage@(pm.IdSuffix)">
+                @for (int i = 0; i < PagingModel.RECORD_PER_PAGES.Length; i++)
+                {
+                    <option>@PagingModel.RECORD_PER_PAGES[i]</option>
+                }
+                </select>
+            </div>
+        </div>
+   </div> 
+
+
+
+     <!--
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <div class="form-group form-group-xs">
+            <input type="hidden" id="txtCurrentPage@(pm.IdSuffix)" value="@pm.PositionPage" />
+            <label class="col-xs-12 col-sm-7 col-md-3 control-label text-muted">
+                Showing @pm.Start to @if (pm.CountData >= pm.End){ @pm.End } else { @pm.CountData } of @pm.CountData row(s)
+            </label>
+    @if (pm.IndexList.Count > 0)
+    {
+            <a class='pagination-theme' href="javascript:onSearchCriteria@(pm.IdSuffix)(@pm.IndexList[0])"><text><<</text></a>
+        foreach (int i in pm.IndexList)
+        {
+            if (i < pm.PositionPage - 2 || i > pm.PositionPage + 2)
+            {
+            }
+            else
+            {
+            <a  @if(i == pm.PositionPage)
+                { 
+                   <text>style='font-size: 15px;' class='pagination-active-theme text-muted'")</text> 
+                }
+                else
+                { 
+                    <text>class='pagination-theme'")</text> 
+                } href="javascript:onSearchCriteria@(pm.IdSuffix)(@i)">@i</a>
+            }
+        }
+            <a class='pagination-theme text-muted' href="javascript:onSearchCriteria@(pm.IdSuffix)(@pm.IndexList[pm.IndexList.Count - 1])">>></a>
+    }                
+            <div class="col-xs-12 col-sm-7 col-md-6">
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <input class="form-control" style="width: 50px;" type="text" id="txtPagingGo@(pm.IdSuffix)" name="txtPagingGo@(pm.IdSuffix)" @if (@pm.IndexList.Count == 0) { WriteLiteral("readonly"); } />
+                </div>
+                <div class="col-xs-4 col-sm-2 col-md-2">
+                    <button type="button" id="btnPagingGo@(pm.IdSuffix)" class="btn btn-xs btn-primary" onclick="javascript:pagingGo@(pm.IdSuffix)()" @if (@pm.IndexList.Count == 0) { WriteLiteral("disabled"); }>Go</button>            
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    <!--
+    <div class="col-xs-12 col-sm-8 col-md-4 text-right">
+        <label class="col-xs-15 col-sm-9 col-md-9 control-label text-muted">
+            Show per page
+        </label>
+        <div class="col-xs-8 col-sm-5 col-md-3 pull-right">            
+            <select class="form-control" id="recordPerPage@(pm.IdSuffix)">
+            @for (int i = 0; i < PagingModel.RECORD_PER_PAGES.Length; i++)
+            {
+                <option>@PagingModel.RECORD_PER_PAGES[i]</option>
+            }
+            </select>
+        </div>
+    </div>
+    -->
+    <script type="text/javascript">
+        function pagingGo@(pm.IdSuffix)() {
+            if($("#txtPagingGo@(pm.IdSuffix)").val() == "") {
+                showErrMesg("Please input the page number");
+
+                return;
+            }
+
+            onSearchCriteria@(pm.IdSuffix)($("#txtPagingGo@(pm.IdSuffix)").val());
+        }
+
+        $(document).ready(function () {
+            $('#txtPagingGo@(pm.IdSuffix)').numeric({ decimal : false, negative : false });
+
+            $("#txtPagingGo@(pm.IdSuffix)").keyup(function(event){
+                if(event.keyCode == 13){
+                    $("#btnPagingGo@(pm.IdSuffix)").click();
+                }
+            });
+
+            $("#recordPerPage@(pm.IdSuffix)").val("@pm.RecordPerPage");
+
+            $("#recordPerPage@(pm.IdSuffix)").change(function (event) {
+                onSearchCriteria@(pm.IdSuffix)($("#txtCurrentPage@(pm.IdSuffix)").val());
+            });
+        });
+    </script>
+</div>

@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using Toyota.Common.Web.Platform;
+using Toyota.Common.Web.UI;
+using Toyota.Common.Credential;
+
+namespace CMD
+{
+    public class MvcApplication : WebApplication
+    {
+        public MvcApplication()
+        {
+            ApplicationSettings.Instance.Name = "Central Master Data";
+            ApplicationSettings.Instance.Alias = "CMD";
+            ApplicationSettings.Instance.OwnerName = "Toyota Motor Manufacturing Indonesia";
+            ApplicationSettings.Instance.OwnerAlias = "TMMIN";
+            ApplicationSettings.Instance.OwnerEmail = "tdk@toyota.co.id";
+            ApplicationSettings.Instance.Menu.Enabled = true;
+            ApplicationSettings.Instance.Runtime.HomeController = "Home"; //uncomment this to setting default page
+
+            ApplicationSettings.Instance.Security.EnableAuthentication = true;
+
+            BypassLogin(false);
+        }
+
+        private void BypassLogin(bool isBypass)
+        {
+            if (isBypass)
+            {
+                ApplicationSettings.Instance.Security.IgnoreAuthorization = true;
+                ApplicationSettings.Instance.Security.SimulateAuthenticatedSession = true;
+                ApplicationSettings.Instance.Security.EnableSingleSignOn = false;
+
+                ApplicationSettings.Instance.Security.SimulatedAuthenticatedUser = new User()
+                {
+                    Username = "dummy",
+                    Password = "toyota",
+                    FirstName = "ISTD",
+                    LastName = "User",
+                    //RegistrationNumber = "09003220"
+                    //RegistrationNumber = "01222322"
+                    RegistrationNumber = "09709493"
+                    //RegistrationNumber =  "00010052"
+                };
+            }
+            else
+            {
+                ApplicationSettings.Instance.Security.IgnoreAuthorization = false;
+                ApplicationSettings.Instance.Security.SimulateAuthenticatedSession = false;
+                ApplicationSettings.Instance.Security.EnableSingleSignOn = false;
+            }
+        }
+
+        protected override void Startup()
+        {
+            ProviderRegistry.Instance.Register<IUserProvider>(typeof(UserProvider), DatabaseManager.Instance, "SecurityCenter");
+
+            //ProviderRegistry.Instance.Register<UILayout>(typeof(BootstrapLayout));
+            //BootstrapLayout layout = (BootstrapLayout)ApplicationSettings.Instance.UI.GetLayout();          
+        }
+    }
+}
