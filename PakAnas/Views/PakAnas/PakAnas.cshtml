@@ -16,12 +16,13 @@
 </div>
 
 @Html.Partial("_ModalAddEdit")
+@Html.Partial("_UploadDataPopup")
 
 
 @section BodyScript{
 
     <!-- Modal Upload js -->
-    @*<script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/dropzone.js")"></script>*@
+    <script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/dropzone.js")"></script>
     <!-- Bootstrap Datepicker js -->
     @*<script type="text/javascript" src="@Url.Content("~/Content/js/FixedTable.js")"></script>>
     <script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/jquery.min.js")"></script>>*@
@@ -30,6 +31,9 @@
     <script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/date-time/bootstrap-datepicker.js")"></script>
 
     <script>
+
+        var gChecked = null;
+        var gOrgEdit = 0;
 
         $(document).ready(function () {
             datepicker.init();
@@ -99,26 +103,52 @@
 
             $("#txtAddEditorg_code").val('');
             $("#txtAddEditorg_name").val('');
-
         }
 
-        //$('#btnSave').click(function () {
-        //    if (validation() != 1) {
-        //        var params = new Object();
-        //        var data = new Object();
+        $('#btnSave').click(function () {
+            if (validation() != 1) {
+                alert("anying");
+                var params = new Object();
+                var data = new Object();
 
-        //        params.screenMode = gScreenMode;
-        //        params.data = data;
+                params.screenMode = gScreenMode;
+                params.data = data;
 
-        //        data.org_code = $("#txtAddEditorg_code").val();
-        //        data.org_name = $("#txtAddEditorg_name").val();
+                data.org_code = $("#txtAddEditorg_code").val();
+                data.org_name = $("#txtAddEditorg_name").val();
 
-        //        $.ajax({
-        //        type
-        //        }
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Content("~/PakAnas/AddEditSave")",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    traditional: true,
+                    data: JSON.stringify(params),
+                    success: function (returnResult) {
+                        popUpProgressHide();
+                        if (returnResult.Result == 'SUCCESS') {
+                            handleAjaxResultGrowl(returnResult, "Save Data",
+                                onSaveSuccess);
+                        } else {
+                            showErrorMesgGrowl(returnResult.ErrMesgs[0]);
+                        }
+                    },
+                    error: function (returnResult) {
+                        popUpProgressHide();
+                        handleAjaxResponseErrorGrowl(returnResult, "Save Data");
+                    }
+                });
+            }
+        });
 
-        //    }
-        //});
+        function onSaveSuccess() {
+
+            clearAddEdit();
+            $("#modalAddEdit").modal('hide');
+
+            onSearchCriteria(1);
+        }
+
         // Process save edit [Start]
         function validation() {
             var flagErr = 0;
@@ -138,5 +168,261 @@
             return flagErr
         }
         
+
+        //Add [End]
+
+        //Edit [Start]
+
+        
+        function btnEdit_onClick() {
+            var isHaveChecked = false;
+            gChecked = 0;
+
+            $("input[name='chkRow']").each(function () {
+                if ($(this).prop('checked')) {
+                    isHaveChecked = true;
+                    gChecked = gChecked + 1;
+                    gOrgEdit = $(".grid-checkbox-body:checked").attr('data-org_code');
+                }
+            });
+
+            if (!isHaveChecked || gChecked > 1) {
+                showErrorMesgGrowl("Choose one Data(s) to be Edit");
+                return;
+            } else {
+                onSuccessEdit();
+            }
+        }
+
+        function setScreenToEditMode() {
+            //$("#modalAddEdit").modal('show');
+            gScreenMode = '@CommonConstant.SCREEN_MODE_EDIT';
+
+            $("#txtAddEditorg_code").prop('disabled', true);
+            $("#txtAddditorg_name").prop('enabled', true);
+        }
+
+        function onSuccessEdit() {
+
+            popUpProgressShow();
+
+            setScreenToEditMode();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/PakAnas/GetByKey")",
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    org_codeId: gOrgEdit
+                },
+                success: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResultGrowl(returnResult, "Get Data org_code", onEditGetDataSuccess,
+                        null, true);
+                },
+                error: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResponseErrorGrowl(returnResult, "Get Data org_code");
+                }
+            });
+     }
+
+        function onEditGetDataSuccess(returnResult) {
+            console.log(returnResult);
+            var data = returnResult.Params[0];
+
+            $("#txtAddEditorg_code").val(data.org_code);
+            $("#txtAddEditorg_name").val(data.org_name);
+
+            $("#modalAddEdit").modal();
+        }
+        //Edit [End]
+
+        //Process save edit [Start]
+        function validation() {
+            var flagErr = 0;
+
+            var org_code = $("#txtAddEditorg_code").val();
+            var org_name = $("#txtAddEditorg_name").val();
+
+            if (org_code == null || org_code == '') {
+                showErrorMesgGrowl('ERROR JS: org_code No should not be empty');
+                return flagErr = 1
+            }
+            if (org_name == null || org_name == '') {
+                showErrorMesgGrowl('ERROR JS: org_name No should not be empty');
+                return flagErr = 1
+            }
+
+            return flagErr
+        }
+
+        // Delete [Start]
+        function btnDelete_onClick() {
+
+            if ($(".grid-checkbox-body:checked").length == 0) {
+                showErrorMesgGrowl("Exact one data should be selected");
+            }
+            else {
+                showConfirmMesg("Are you sure want to delete this data ?",
+                    onConfirmDelete, "Delete Confirmation");
+            }
+        }
+
+        function btnDeleteMultiple_onClick() {
+            var isHaveChecked = false;
+            $("input[name='chkRow']").each(function () {
+                if ($(this).prop('checked')) {
+                    isHaveChecked = true;
+                }
+            });
+
+            if (!isHaveChecked) {
+                showErrorMesgGrowl("Select one or more record to be deleted.");
+                return;
+            }
+
+            showConfirmMesg("Are you sure you want to delete the record ?",
+                onConfirmDeleteMultiple, "Delete Confirmation");
+        }
+
+        function onConfirmDeleteMultiple() {
+            popUpProgressShow();
+
+            var selectedKeys = [];
+            var id = null;
+
+            $("input[name='chkRow']").each(function () {
+                if ($(this).prop('checked')) {
+                    id = $(this).attr('data-org_code');
+                    selectedKeys.push(id);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/PakAnas/Delete")",
+                contentType: 'application/json',
+                dataType: 'json',
+                traditional: true,
+                data: JSON.stringify(selectedKeys),
+                success: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResultGrowl(returnResult, "Delete org", onSaveSuccess);
+
+                },
+                error: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResponseErrorGrowl(returnResult, "Delete org");
+                }
+            });
+        }
+        // Delete Multiple [end]
+       
+        //Download Data to Excel
+        function btnDownloadClose_onClick() {
+            $('#confirmationDownload').css('display', 'none');
+        }
+
+        function btnDownload_onClick(flag) {
+
+            $('#confirmationDownload').css('display', 'none');
+
+            popUpProgressShow();
+
+            $.fileDownload('@Url.Content("~/PakAnas/DownloadFileExcel")', {
+                httpMethod: "POST",
+                data: {
+                    org_code: $("#txtSearchorg_code").val(),
+                    org_name: $("#txtSearchorg_name").val(),
+                    RowsPerPage: $("#recordPerPage").val(),
+                    CurrentPage: $("#txtCurrentPage").val(),
+                    PageFlag: flag
+                },
+                successCallback: function (url) {
+                    popUpProgressHide();
+                },
+                failCallback: function (responseHtml, url) {
+                    popUpProgressHide();
+                    var returnResult = JSON.parse(responseHtml.replace("<pre>", "")
+                        .replace("</pre", ""));
+
+                    handleAjaxResultGrowl(returnResult, "Download");
+                }
+            });
+        }
+        //Download Excel [END]
+
+        //Download template [Start]
+        function btnDownloadTemplate_onClick() {
+            popUpProgressShow();
+
+            $.fileDownload('@Url.Content("~/PakAnas/DownloadTemplate")', {
+                httpMethod: 'POST',
+                data: {
+
+                },
+                successCallback: function (url) {
+                    popUpProgressHide();
+                },
+                failCallback: function (responseHtml, url) {
+                    popUpProgressHide();
+                    var returnResult =
+                        JSON.parse(responseHtml.replace("<pre>", "").replace("</pre>", ""));
+
+                    handleAjaxResultGrowl(returnResult, "Download Template");
+                }
+            });
+        }
+        // [End]
+
+        //Upload [Start]
+        function btnUpload_onClick() {
+            $("#uploadMode").val('@CommonConstant.SCREEN_MODE_ADD');
+            $("#uploadDataFilePopup").modal();
+        }
+
+        function onUploadDatFileSuccess() {
+            $("#uploadDataFilePopup").modal('hide');
+            onSearchCriteria(1);
+        }
+        //Upload [End]
+
+        //Upload Attachment
+        function btnUploadAttach_onClick(e) {
+            $("#uploadAttachFilePopup").modal();
+        }
+
+        function onUploadAttachmentSuccess(returnResult) {
+            if (returnResult.Result == "ERROR") {
+                showErrorMesgGrowl(returnResult.ErrMesgs);
+
+            }
+            else {
+                onUploadDatFileSuccess();
+
+
+            }
+        }
+        function onDownloadFile(e) {
+            console.log(e);
+            popUpProgressShow();
+            $.fileDownload("@Html.Toyota().Page.GetActionUrl("DownloadFile")", {
+                data: {
+                    fileName: $(e).attr('data-filename'),
+                    fileNameHalPath: $(e).attr('data-fileNameHalfPath')
+                },
+                successCallback: function (url) {
+                    popUpProgressHide();
+                },
+                failCallback: function (responseHtml, url) {
+                    popUpProgressHide();
+                    handleDownloadResponseError(responseHtml, url);
+                }
+            });
+        }
+        //Upload Attachment [End]
+
     </script>
-}
+    }

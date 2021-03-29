@@ -1,3 +1,4 @@
+D:\Download\PakAnas\PakAnas\obj\Debug\PakAnas.csprojResolveAssemblyReference.cache
 D:\Download\PakAnas\PakAnas\bin\PakAnas.dll
 D:\Download\PakAnas\PakAnas\bin\PakAnas.pdb
 D:\Download\PakAnas\PakAnas\bin\EPPlus.dll
@@ -37,4 +38,3 @@ D:\Download\PakAnas\PakAnas\bin\EPPlus.xml
 D:\Download\PakAnas\PakAnas\bin\NPOI.xml
 D:\Download\PakAnas\PakAnas\obj\Debug\PakAnas.dll
 D:\Download\PakAnas\PakAnas\obj\Debug\PakAnas.pdb
-D:\Download\PakAnas\PakAnas\obj\Debug\PakAnas.csprojResolveAssemblyReference.cache

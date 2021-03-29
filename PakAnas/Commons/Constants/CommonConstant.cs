@@ -13,6 +13,18 @@ namespace PakAnas.Commons.Constants
         public const int MODULE_ID_INTERFACE_OUT = 5;
         // Module [end]
 
+        // Upload data type, size
+        public const string SUFE_ORG_INPUT = "SUFE_ORG_INPUT";
+        public const string SUFS_ORG_INPUT = "SUFS_ORG_INPUT";
+         //Upload data type, size
+
+        ////Upload attachment type, size
+        //public const string SUFE_PAKANAS_INPUT_ATTACHMENT =
+        //    "SUFE_PAKANAS_INPUT_ATTACHMENT";
+        //public const string SUFS_PAKANAS_INPUT_ATTACHMENT =
+        //    "SUFS_PAKANAS_INPUT_ATTACHMENT";
+        ////Upload attachment typr, size
+
         // Function [start]
         public const int FUNCTION_ID_ITF_FILE_OUT_CALENDAR = 5001;
         public const int FUNCTION_ID_ITF_FILE_OUT_COST_CENTER = 5002;
@@ -117,5 +129,7 @@ namespace PakAnas.Commons.Constants
 
         public const string GETSUDO_INTERFACE_PART_LIST = "GETSUDO_INTERFACE_PART_LIST";
         public const string GETSUDO_INTERFACE_PART_LIST_ENGINE = "PROD_TYPE_ENGINE";
+
+        public static object SUFE_PAKANAAS_ { get; set; }
     }
 }

@@ -9,6 +9,20 @@
     //PagingModel _PaginatorBottom = new ViewData[
      }
 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#checkall").click(function () {
+            $(".grid-checkbox").prop("checked", $("#checkall").is(":checked"));
+        });
+
+        $(".grid-checkbox").click(function () {
+            $("#checkall").prop("checked", $('.grid-checkbox:not(#checkall)').not(':checked').length == 0);
+        });
+    });
+</script>
+
+
 <div class="afixed-main-container" id="main-container" style="height:300px">
     <div class="table-responsive _table-flow-2 
             afixed-table-container" id="generalDataTable-container">
@@ -48,7 +62,7 @@
                         <tr>
                             <td style="width:30px" class="text-center grid-checkbox-col afixed-column">
                                 <input name="chkRow" type="checkbox" class="grid-checkbox grid-checkbox-body" 
-                                    data-employeeId="" />
+                                    data-org_code="@data.org_code" />
                             </td>
                             <td style="width:90px">@data.org_code</td>
                             <td style="width:200px">@data.org_name</td>
@@ -57,8 +71,8 @@
                             
                             <td style="width:80px" align="center">@data.create_by</td>
                             <td style="width:80px" align="center">@data.create_on</td>
-                            <td style="width:80px" align="center">@data.CHANGED_BY</td>
-                            <td style="width:80px" align="center">@data.CHANGED_DT</td>
+                            <td style="width:80px" align="center">@data.update_by</td>
+                            <td style="width:80px" align="center">@data.update_on</td>
                         </tr>
                   }
                     

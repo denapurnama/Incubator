@@ -626,8 +626,11 @@
     <Content Include="Content\UI\underscore-min.js" />
     <Content Include="Content\UI\uses.js" />
     <Content Include="Global.asax" />
+    <Content Include="SQL\PakAnas\PakAnas_FindBySettingCd.sql" />
+    <Content Include="SQL\PakAnas\Pakanas_GetByKey.sql" />
     <Content Include="SQL\PakAnas\Pakanas_Search.sql" />
     <Content Include="SQL\PakAnas\Pakanas_SearchCount.sql" />
+    <Content Include="SQL\PakAnas\_DeleteMultiple.sql" />
     <Content Include="SQL\PakAnas\_InsertUpdate.sql" />
     <Content Include="Tdk-Lib\EPPlus.dll" />
     <Content Include="Tdk-Lib\EPPlus.XML" />
@@ -944,6 +947,7 @@
     <Content Include="Views\PakAnas\PakAnas.cshtml" />
     <Content Include="Views\PakAnas\_Search_Criteria.cshtml" />
     <Content Include="Views\PakAnas\_ModalAddEdit.cshtml" />
+    <Content Include="Views\PakAnas\_UploadDataPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL" />
@@ -1038,7 +1042,9 @@
     <Reference Include="Toyota.Common.Workflow, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="VisitorCounter, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Documents\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
