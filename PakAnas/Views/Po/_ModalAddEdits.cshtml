@@ -1,0 +1,116 @@
+﻿@using System;
+@using Toyota.Common.Web.Platform;
+@using PakAnas.Models;
+@using PakAnas.Commons.Models;
+@using PakAnas.Commons.Constants;
+
+@{
+    IList<Approval> listApproval = (IList<Approval>)ViewData["ListApproval"];
+    IList<OrgHierarchy> listOrg = (IList<OrgHierarchy>)ViewData["ListOrg"]; 
+}
+
+<div class="modal fade" id="modalAddEdit" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-md" style="width:1000px;">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" id="iconClose" onclick="btnCancel_onClick();" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add/Edit @Html.Toyota().Page.Title</h4>
+                <br />
+            </div>
+
+            <!-- Modal Body -->
+            <form role="form" class="form-horizontal" id="formAddEdit">
+                <div style="height:auto; overflow-x:hidden;">
+                    <div class="modal-body">
+                      <input type="text" class="hidden" name="" id="txtAddEditApprovalId" value="" data-detail="" />
+                        <div class="row" style="margin-bottom:15px;">
+                             <div class="col-xs-6 col-sm-6 col-md-6">
+                                 <div class="form-group form-group-xs">
+                                     <label class="col-xs- col-sm-3 col-md-4 control-label">Po No</label>
+                                     <div class="col-xs-8 col-sm-9 col-md-8">
+                                         <div class="input-group input-group-xs">
+                                             <input class="form-control" id="txtAddEditPoNo" type="text" style="width: 225px;" />   
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                 <div class="form-group form-group-xs">
+                                     <label class="col-xs-4 col-sm-3 col-md-4 control-label">Supplier Code</label>
+                                     <div class="col-xs-8 col-sm-9 col-md-8">
+                                     <div style="width: 225px;">
+                                        <select class="form-control chosen-select" id="cmbAddEditSupplier">
+                                            <option selected="selected" value=""></option>
+                                            @foreach (PakAnas.Models.OrgHierarchy b in listOrg)
+                                            { 
+                                                 <option  data-function_id="@b.supplier_name" 
+                                                    data-function_name="@b.supplier_code" value="@b.supplier_code">@b.supplier_code</option>
+                                            }
+                                        </select>
+                                      </div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                             <div class="col-xs-6 col-sm-6 col-md-6">
+                                 <div class="form-group form-group-xs">
+                                     <label class="col-xs-4 col-sm-3 col-md-4 control-label">Pr No</label>
+                                     <div class="col-xs-8 col-sm-9 col-md-8">
+                                     <div style="width: 225px;">
+                                        <select class="form-control chosen-select" id="cmbAddEditPrNo">
+                                            <option selected="selected" value=""></option>
+                                            @foreach (PakAnas.Models.Approval a in listApproval)
+                                            { 
+                                               <option data-function_id="@a.req_org" 
+                                                    data-function_name="@a.pr_no" value="@a.pr_no">@a.pr_no</option>
+                                            }
+                                        </select>
+                                      </div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                             <div class="col-xs-6 col-sm-6 col-md-6">
+                                 <div class="form-group form-group-xs">
+                                     <label class="col-xs-4 col-sm-3 col-md-4 control-label">Po Date</label>
+                                     <div class="col-xs-8 col-sm-9 col-md-8">
+                                         <div class="input-group input-group-xs">
+                                             <input class="form-control date-picker" id="txtAddEditToDate" type="text" style="width: 225px;" />   
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-md-12">
+                                 <div class="page-header" style="padding-bottom: 5px; margin-bottom: 10px; border-bottom: 1px solid #e2e2e2;">
+                                     <span class="caption" style="font-weight:bold;">Purchase Order List</span>
+                                 </div>
+                                <div style="margin-bottom:5px">
+                                    <button id="btnAddDtl" class="btn btn-sm btn-primary" onclick="btnAddDtl_onClick();" type="button">Add</button>
+                                    <button id="btnDelDtl" class="btn btn-sm btn-primary" onclick="btnDelDtl_onClick();" type="button">Del</button>
+                                </div>
+                                <div id="divDetail" style="margin-top:0px">
+                                    @Html.Partial("_GridDetails")
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>                     
+            </form>
+            
+            <!-- Modal Footer -->            
+            <div class="modal-footer">
+                <div class="col-xs-12 text-right">
+                    <button type="submit" class="btn btn-sm btn-primary" id="btnSave" onclick="btnSave_onClick();">Save</button>
+                    <button type="button" class="btn btn-sm btn-danger" id="btnCancel" onclick="btnCancel_onClick();" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

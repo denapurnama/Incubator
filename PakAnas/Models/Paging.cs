@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CrudSystem.Models
+namespace Adaptive.Models
 {
     public class Paging
     {

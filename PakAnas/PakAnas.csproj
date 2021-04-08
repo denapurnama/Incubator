@@ -51,6 +51,7 @@
     <Compile Include="Commons\Controllers\BaseUploadDownloadController.cs" />
     <Compile Include="Commons\Controllers\BaseUploadDownloadFtpServerController.cs" />
     <Compile Include="Commons\Controllers\BaseInterfaceFileOutController.cs" />
+    <Compile Include="Commons\Controllers\HelperController.cs" />
     <Compile Include="Commons\Controllers\IExcelWriter.cs" />
     <Compile Include="Commons\Controllers\NPOIWriter.cs">
       <SubType>Code</SubType>
@@ -66,6 +67,7 @@
     <Compile Include="Commons\Models\AjaxResult.cs" />
     <Compile Include="Commons\Models\BaseModel.cs" />
     <Compile Include="Commons\Models\BaseResult.cs" />
+    <Compile Include="Commons\Models\DataLockRepo.cs" />
     <Compile Include="Commons\Models\InterfaceFileOutModel.cs" />
     <Compile Include="Commons\Models\OrganizationPerson.cs" />
     <Compile Include="Commons\Models\PagingModel.cs" />
@@ -74,16 +76,23 @@
     <Compile Include="Commons\Repositories\BaseRepo.cs" />
     <Compile Include="Commons\Helpers\MimeExtensionHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PakAnasController.cs" />
+    <Compile Include="Controllers\PoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Approval\Approval.cs" />
+    <Compile Include="Models\Approval\ApprovalFlow.cs" />
+    <Compile Include="Models\Items\Items.cs" />
     <Compile Include="Models\Paging.cs" />
     <Compile Include="Models\PakAnas\PakAnass.cs" />
     <Compile Include="Models\SimpleMasterCustomModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\PakAnasRepository.cs" />
+    <Compile Include="Repositories\PoRepository.cs" />
     <Content Include="Content\css\chosen.min.css" />
     <Content Include="Content\js\chosen.jquery.min.js" />
     <Content Include="Content\css\FixedTable.css" />
@@ -626,12 +635,32 @@
     <Content Include="Content\UI\underscore-min.js" />
     <Content Include="Content\UI\uses.js" />
     <Content Include="Global.asax" />
+    <Content Include="SQL\FileTemp\FileTemp_Insert.sql" />
+    <Content Include="SQL\Item\Item_DeleteMultiple.sql" />
+    <Content Include="SQL\Item\Item_FindBySettingCd.sql" />
+    <Content Include="SQL\Item\Item_GetByKey.sql" />
+    <Content Include="SQL\Item\Item_InsertUpdate.sql" />
+    <Content Include="SQL\Item\Item_Search.sql" />
+    <Content Include="SQL\Item\Item_SearchCount.sql" />
     <Content Include="SQL\PakAnas\PakAnas_FindBySettingCd.sql" />
     <Content Include="SQL\PakAnas\Pakanas_GetByKey.sql" />
     <Content Include="SQL\PakAnas\Pakanas_Search.sql" />
     <Content Include="SQL\PakAnas\Pakanas_SearchCount.sql" />
     <Content Include="SQL\PakAnas\_DeleteMultiple.sql" />
     <Content Include="SQL\PakAnas\_InsertUpdate.sql" />
+    <Content Include="SQL\Po\FindBySettingCd.sql" />
+    <Content Include="SQL\Po\Po_CmbSupplier.sql" />
+    <Content Include="SQL\Po\Po_DeleteMultiple.sql" />
+    <Content Include="SQL\Po\Po_FindByType.sql" />
+    <Content Include="SQL\Po\Po_GetAllOrgByCriteria.sql" />
+    <Content Include="SQL\Po\Po_GetAllPersonByCriteria.sql" />
+    <Content Include="SQL\Po\Po_GetByKey.sql" />
+    <Content Include="SQL\Po\Po_GetFunctionById.sql" />
+    <Content Include="SQL\Po\Po_GetListByApprovalId.sql" />
+    <Content Include="SQL\Po\Po_Insert.sql" />
+    <Content Include="SQL\Po\Po_Search.sql" />
+    <Content Include="SQL\Po\Po_SearchCount.sql" />
+    <Content Include="SQL\Po\Po_Update.sql" />
     <Content Include="Tdk-Lib\EPPlus.dll" />
     <Content Include="Tdk-Lib\EPPlus.XML" />
     <Content Include="Tdk-Lib\ICSharpCode.SharpZipLib.dll" />
@@ -948,6 +977,17 @@
     <Content Include="Views\PakAnas\_Search_Criteria.cshtml" />
     <Content Include="Views\PakAnas\_ModalAddEdit.cshtml" />
     <Content Include="Views\PakAnas\_UploadDataPopup.cshtml" />
+    <Content Include="Views\Item\Item.cshtml" />
+    <Content Include="Views\Item\_GridView.cshtml" />
+    <Content Include="Views\Item\_ModalAddEdit.cshtml" />
+    <Content Include="Views\Item\_SearchCriteria.cshtml" />
+    <Content Include="Views\Item\_UploadDataPopup.cshtml" />
+    <Content Include="Views\Po\Po.cshtml" />
+    <Content Include="Views\Po\_Criteria.cshtml" />
+    <Content Include="Views\Po\_GridDetails.cshtml" />
+    <Content Include="Views\Po\_GridViews.cshtml" />
+    <Content Include="Views\Po\_ModalAddEdits.cshtml" />
+    <Content Include="Views\Po\_UploadDataPopups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL" />

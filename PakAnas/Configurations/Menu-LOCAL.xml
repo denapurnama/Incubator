@@ -8,6 +8,14 @@
                  Text="PakAnas" Description="PakAnas Master" Glyph="cog">
     </menu-item>
   </menu-item>
+      <menu-item Id="menu-master" Enabled="True" Visible="True" Url="#" Text="Logistik" Description="Vehicle" Glyph="cog">
+        <menu-item Id="menu-Item-Master" Enabled="True" Visible="True" Url="Item"
+                   Text="Tabel Item" Description="Barang" Glyph="cog">
+        </menu-item>
+        <menu-item Id="menu-Po-Master" Enabled="True" Visible="True" Url="Po"
+                   Text="Tabel Po" Description="Purchase" Glyph="cog">
+        </menu-item>
+      </menu-item>
 
   <menu-item Id="menu-monitoring" Enabled="True" Visible="False" Url="#" Text="Monitoring" Description="Monitoring" Glyph="cog">
     <menu-item Id="menu-Log-Monitoring" Enabled="True" Visible="True" Url="LogMonitoring" Text="Log Monitoring" Description="Log Monitoring" Glyph="tachometer"  >

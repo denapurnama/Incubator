@@ -1,0 +1,85 @@
+﻿@using System;
+@using Toyota.Common.Web.Platform;
+@using PakAnas.Models.Items;
+@using PakAnas.Commons.Models;
+@using PakAnas.Commons.Constants;
+@using PakAnas.Models;
+
+
+
+@{
+    List<Items> listData = (List<Items>)ViewData["listDataAdaptive"];
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#checkall").click(function () {
+            $(".grid-checkbox").prop("checked", $("#checkall").is(":checked"));
+        });
+
+        $(".grid-checkbox").click(function () {
+            $("#checkall").prop("checked", $('.grid-checkbox:not(#checkall)').not(':checked').length == 0);
+        });
+    });
+</script>
+
+<div class="afixed-main-container" id="main-container" style="height:300px">
+    <div class="table-responsive _table-flow-2 
+            afixed-table-container" id="generalDataTable-container">
+        <div class="afixed-table-viewport" id="generalDataTable-viewport"></div>
+        
+        <table class="table table-bordered table-condensed 
+                table-stripped afixed-table" id="generalDataTable">
+
+            <thead>
+                <tr class="afixed-header" id="generalDataTable-header">
+                    <th class="grid-checkbox-col afixed-column" rowspan="2" style="width:30px">
+                        <input class="grid-checkbox" type="checkbox" id="checkall" />
+                    </th>
+                    <th class="afixed-column" style="width:110px" rowspan="2">ITEM CODE</th>
+                    <th class="afixed-column" style="width:90px" rowspan="2">ITEM NAME</th>
+                    <th style="width:95px" rowspan="2">ITEM UM</th>
+                    <th style="width:160px" colspan="2">Created</th>
+                    <th style="width:160px" colspan="2">Changed</th>
+                </tr>
+                <tr class="afixed-header" id="generalDataTable-header2">
+					<th style="width:80px;">By</th>
+					<th style="width:80px;">Date</th>
+					<th style="width:80px;">By</th>
+					<th style="width:80px;">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (listData == null || listData.Count == 0)
+                {
+                    <tr>
+                        <td colspan="13">No Data Found</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (Items data in listData)
+                    {
+                        <tr>
+                            <td style="width:30px" class="text-center grid-checkbox-col afixed-column">
+                                <input name="chkRow" type="checkbox" class="grid-checkbox grid-checkbox-body" 
+                                    data-itemscode="@data.ITEM_CODE" />
+                            </td>
+                            <td style="width:110px" class="afixed-column">@data.ITEM_CODE</td>
+                            <td style="width:90px" class="afixed-column ellipsis" title="@data.ITEM_NAME">@data.ITEM_NAME</td>
+                            <td style="width:95px">@data.ITEM_UM</td>
+                            
+                            <td style="width:80px" align="center">@data.CREATED_BY</td>
+                            <td style="width:80px" align="center">@data.CREATED_DT_STR</td>
+                            <td style="width:80px" align="center">@data.CHANGED_BY</td>
+                            <td style="width:80px" align="center">@data.CHANGED_DT_STR</td>
+                        </tr>
+                    }
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@Html.Partial("_PaginatorBottom", (PagingModel)ViewData["Paging"])

@@ -1,0 +1,76 @@
+﻿@using PakAnas.Commons.Constants;
+
+<form role="form" class="form-horizontal" id="searchForm" method="post" action="@Html.Toyota().Page.GetActionUrl("Search")">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group form-group-xs">
+                <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">Po No</label>
+                <div class="col-xs-8 col-sm-9 col-md-8">
+                    <div class="input-group input-group-xs">
+                        <input class="form-control enterOnSearch" id="txtSearchPoNo" type="text" placeholder="Search Purchase Order Number" style="width:300px;"/>   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group form-group-xs">
+                <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">Pr No</label>
+                <div class="col-xs-8 col-sm-9 col-md-8">
+                    <div class="input-group input-group-xs">
+                        <input class="form-control enterOnSearch" id="txtSearchPrNo" type="text" placeholder="Search Purchase Repeat Number" style="width:300px;"/>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group form-group-xs">
+                <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">Po Date</label>
+                <div class="col-xs-8 col-sm-9 col-md-8">
+                    <div class="input-group input-group-xs">
+                        <input class="form-control date-picker enterOnSearch" id="txtSearchPoDate" type="text" maxlength="255"/ placeholder="Search Purchase Order Date" style="width:300px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group form-group-xs">
+                <label class="col-xs-4 col-sm-3 col-md-4 control-label text-muted">Supplier Code</label>
+                <div class="col-xs-8 col-sm-9 col-md-8">
+                    <div class="input-group input-group-xs">
+                        <input class="form-control enterOnSearch" id="txtSearchSupplierCode" type="text" placeholder="Search Supplier Code" style="width:300px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  -->
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="form-group form-group-xs">
+                <!-- <label class="col-xs-4 col-sm-3 col-md-4 control-label">Name</label> -->
+                <div class="col-xs-8 col-sm-9 col-md-8">
+                    <div class="input-group input-group-xs">
+                        <!-- <input class="form-control" id="txtSearchBuyerName" type="text" maxlength="255"/> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <button id="btnAdd" type="button" class="btn btn-sm btn-primary" onclick="btnAdd_onClick();">Add</button>
+            <button id="btnDelete" type="button" class="btn btn-sm btn-danger" onclick="btnDeleteMultiple_onClick();">Delete</button>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="text-right">
+                <button id="btnDownload" type="button" class="btn btn-xs btn-success" onclick="btnDownload_onClick();">Download</button>
+                <button id="btnSearch" type="button" class="btn btn-sm btn-primary" onclick="btnSearch_onClick();">Search</button>
+                <button id ="btnReset" type="reset" class="btn btn-sm btn-default" onclick="btnClear_onClick();">Clear</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="line-br"></div>

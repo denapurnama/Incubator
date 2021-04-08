@@ -9,9 +9,30 @@ namespace PakAnas.Commons.Constants
 {
     public class CommonConstant
     {
+        public const string SYSTEM_TYPE_SPTT_APPROVER_TYPE = "SPTT_APPROVER_TYPE";
+
+        public enum DATA_LOCK_ACTION_TYPE { SDLAT_EDIT, SDLAT_REVISE, SDLAT_CREATE };
+
         // Module [start]
         public const int MODULE_ID_INTERFACE_OUT = 5;
         // Module [end]
+        // Upload data type, size
+        public const string SUFE_EMPLOYEE_INPUT = "SUFE_EMPLOYEE_INPUT";
+        public const string SUFS_EMPLOYEE_INPUT = "SUFS_EMPLOYEE_INPUT";
+        // Upload data type, size
+
+        // Upload attachment type, size
+        public const string SUFE_EMPLOYEE_INPUT_ATTACHMENT =
+            "SUFE_EMPLOYEE_INPUT_ATTACHMENT";
+        public const string SUFS_EMPLOYEE_INPUT_ATTACHMENT =
+            "SUFS_EMPLOYEE_INPUT_ATTACHMENT";
+        // Upload attachment type, size
+
+        // Upload attachment type, size
+        //Download attachment
+        public const string SYS_FILE_LOC_TEMP_FOLDER = "SF_TEMP_FOLDER";
+        public const string SYS_FILE_LOC_MAIN_FOLDER = "SF_MAIN_FOLDER";
+        //Download attachment
 
         // Upload data type, size
         public const string SUFE_ORG_INPUT = "SUFE_ORG_INPUT";

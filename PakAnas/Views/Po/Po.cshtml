@@ -1,0 +1,750 @@
+﻿@using System;
+@using PakAnas.Commons.Constants;
+@using PakAnas.Commons.Models;
+@using PakAnas.Models;
+
+@model PagingModel
+@{
+    Layout= "~/Views/Shared/_Layout.cshtml";
+    IList<ApprovalSystem> listType = (IList<ApprovalSystem>)ViewData["ListType"];
+    IList<OrgHierarchy> listOrg = (IList<OrgHierarchy>)ViewData["ListOrg"];
+    IList<Buyer> listPerson = (IList<Buyer>)ViewData["ListPerson"];
+
+    PagingModel pm = Model;
+    if (pm == null)
+    {
+        pm = new PagingModel();
+    }            
+}
+
+@section HeadScript {
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/chosen.min.css")" />
+
+    <style>
+        #gridPIC th, td
+        {
+            white-space:nowrap;
+        }
+        /*
+        #tblDetail .chosen-container-single
+        {
+            border:#ff0000 solid 1px !important;
+        }
+        */
+    </style>
+}
+
+@Html.Partial("_Criteria")
+
+<div id="divGrid">
+    @Html.Partial("_GridViews")
+</div>
+
+<div id="divModalAddEdit">
+    @Html.Partial("_ModalAddEdits") 
+</div>
+
+
+<div id="confirmationDownload" class="bootstrap-growl alert alert-success" style="position: fixed; margin: 0px 0px 0px -125px; z-index: 9999; top: 20px; width: 250px; left: 50%; display:none;">
+	<a class="close" onClick="btnDownloadClose_onClick()">×</a>Halo, Mau Download File berdasarkan ?
+	<br/><br /><button type="button" class="btn btn-xs btn-warning" onClick="btnDownloadAct_onClick(0)">All page</button>
+	&nbsp<button type="button" class="btn btn-xs btn-success" onClick="btnDownloadAct_onClick(1)">Per page</button>
+</div>
+
+@section BodyScript{
+<script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/date-time/bootstrap-datepicker.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Content/js/chosen.jquery.min.js")"></script>
+
+<script type="text/javascript">
+    var gScreenMode = null;
+    var gApprovTypeList = [];
+    var gApprovOrgList = [];
+    var gApprovPersonList = [];
+    var l = 0, seq = 1;
+
+
+    $(document).ready(function () {       
+        
+        @foreach (ApprovalSystem set in listType)
+        {
+            <text>var obj = new Object();</text>
+            <text>obj.SYSTEM_TYPE_CD = '@set.SYSTEM_TYPE_CD'</text>
+            <text>obj.SYSTEM_VALUE_TXT = '@set.SYSTEM_VALUE_TXT'</text>
+            <text>gApprovTypeList.push(obj)</text>
+        }
+
+        @foreach (OrgHierarchy set in listOrg)
+        {
+            <text>var obj = new Object();</text>
+            <text>obj.ORG_ID = '@set.ORG_ID'</text>
+            <text>obj.ORG_TITLE = '@set.ORG_TITLE'</text>
+            <text>gApprovOrgList.push(obj)</text>
+        }
+
+        @foreach (Buyer set in listPerson)
+        {
+            <text>var obj = new Object();</text>
+            <text>obj.po_no = '@set.po_no'</text>
+            <text>obj.item_code = '@set.item_code'</text>
+            <text>gApprovPersonList.push(obj)</text>
+        }
+
+        $("#checkall").click(function () {
+            $(".grid-checkbox-body").prop("checked", $("#checkall").is(":checked"));
+        });
+
+        $(".grid-checkbox-body").click(function () {
+            $("#checkall").prop("checked", $('.grid-checkbox-body:not(#checkall)').not(':checked').length == 0);
+        });
+
+        datepicker.init();
+        fixChoosen();
+        $(".chosen-container").css("width", "100%");
+
+    });
+
+    var datepicker = {
+        init: function () {
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd-M-yyyy'
+            });
+        }
+    };
+
+    if (!ace.vars['touch']) {
+        $('.chosen-select').chosen({ allow_single_deselect: true });
+        //resize the chosen on window resize
+    
+        $(window)
+        .off('resize.chosen')
+        .on('resize.chosen', function () {
+            $('.chosen-select').each(function () {
+                var $this = $(this);
+                $this.next().css({ 'width': $this.parent().width() });
+                //$("#cmbAddEditPICNoreg_chosen a div").hide();
+                //$("#cmbAddEditCarFamilyId_chosen a div").hide();
+            })
+        }).trigger('resize.chosen');
+    }
+
+    // Search [Start]
+    function btnSearch_onClick() {
+        onSearchCriteria(1);
+    } 
+
+    function onSearchCriteria(page) {
+
+        popUpProgressShow();
+        $.ajax({
+            type : "POST",
+            url : "@Html.Toyota().Page.GetActionUrl("Search")",
+            data: {
+                po_no: $("#txtSearchPoNo").val(),
+                pr_no: $("#txtSearchPrNo").val(),
+                po_date: $("#txtSearchPoDate").val(),
+                supplier_code: $("#txtSearchSupplierCode").val(),
+                recordPerPage: $("#recordPerPage").val(),
+                currentPage: page
+            },
+            success: function(data){
+                $("#divGrid").html(data);
+                popUpProgressHide();
+            }, 
+            error: function(data){
+                popUpProgressHide();
+            }
+        });
+    }
+
+    function btnClear_onClick() {
+        $("#txtSearchPoNo").val('');
+        $("#txtSearchPrNo").val('');
+        $("#txtSearchPoDate").val('');
+        $("#txtSearchSupplierCode").val('');
+        onSearchCriteria(1);
+    }
+    // Search [End]
+    
+    // Add [Start]
+    function btnAdd_onClick() {
+        setScreenToAddMode();
+        $("#modalAddEdit").modal();
+    }
+
+    function setScreenToAddMode() {
+        gScreenMode = '@CommonConstant.SCREEN_MODE_ADD';
+        clearAddEdit(gScreenMode);
+    }
+    // Add [End]
+
+    // Clear add edit [Start]
+    function clearAddEdit(screenAddEditFLag) {
+        $("#txtAddEditFromDate").val('');
+        $("#txtAddEditApprovalName").val('');
+        $("#cmbAddEditFunction").val('');
+
+        l = 0;
+        seq = 1;
+
+        if (screenAddEditFLag == '@CommonConstant.SCREEN_MODE_EDIT')
+        {
+            $("#txtAddEditApprovalName").prop('disabled', true);
+            $("#cmbAddEditFunction").prop('disabled', true);
+
+            $("#txtAddEditToDate").val('');
+            $("#cmbAddEditFunction").val('');
+            
+            $('#txtAddEditFromDate').datepicker('setStartDate', null);
+
+            $("#btnSave").attr('onclick','btnSave_onClick();');
+            $("#tblDetail tbody tr").remove();
+        }
+        else
+        {            
+            $("#txtAddEditApprovalName").prop('disabled', false);
+            $("#cmbAddEditFunction").prop('disabled', false);
+
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            $('#txtAddEditFromDate').datepicker('setDate', tomorrow);
+            $('#txtAddEditFromDate').datepicker('setStartDate', new Date());
+
+            $("#txtAddEditToDate").val('dd-mm-yyyy'); 
+
+            $("#btnSave").attr('onclick','btnSave_onClick();');
+            $("#tblDetail tbody tr").remove();
+
+            btnAddDtl_onClick();
+        }
+    }
+    //Add [End]
+
+    //Edit Start
+    function linkEdit_onClick(ApprovalId){
+        popUpProgressShow();
+
+        setScreenToEditMode();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/Po/GetByKey")",
+            dataType: 'json',
+            traditional: true,
+            data: { 
+                approvalId: ApprovalId
+            },
+            success: function (returnResult) {
+                popUpProgressHide();
+                handleAjaxResultGrowl(returnResult, "Get Data Approval Master",
+                    onEditGetDataSuccess, null, true);  
+            },
+            error: function (returnResult) {
+                popUpProgressHide();
+                handleAjaxResponseErrorGrowl(returnResult, "Get Data Approval Master");
+            }
+        });         
+    }
+
+    function onEditGetDataSuccess(returnResult)
+    {
+        console.log(returnResult);
+        var data = returnResult.Params[0];
+
+        $("#modalAddEdit").modal();
+        $("#txtAddEditApprovalId").val(data.APPROVAL_ID);
+        $("#txtAddEditPoNo").val(data.po_no);
+        $("#txtAddEditPrNo").val(data.pr_no);
+        $("#txtAddEditSupplier").val(data.supplier_code);
+        $("#txtAddEditToDate").datepicker("setDate", data.PO_DATE_STR);          
+                       
+        for(var i = 0; i < data.listApprovalFlow.length; i++){
+            btnAddDtl_onClick();
+                
+            $("#txtAddEditSeq"  + i).val(
+                data.listApprovalFlow[i].SEQ);
+            $("#cmbAddEditItemcode" + i).val(
+                data.listApprovalFlow[i].item_code);
+            $("#txtAddEditQty"  + i).val(
+                data.listApprovalFlow[i].request_qty);
+            $("#txtAddEditUnit" + i).val(
+                data.listApprovalFlow[i].unit_price);
+
+            if (data.listApprovalFlow[i].APPROVER_TYPE != 0 )
+            {
+                if(data.listApprovalFlow[i].APPROVER_TYPE == "SAT_BUYER")
+                {
+                    $("#cmbAddEditDtlOrg"+(i)).prop('disabled', true)
+                        .trigger("chosen:updated");
+                    $("#cmbAddEditDtlPerson"+(i)).prop('disabled', true)
+                        .trigger("chosen:updated");
+                }
+                else if(data.listApprovalFlow[i].APPROVER_TYPE == "SAT_BY_PERSON"){
+                    $("#cmbAddEditDtlOrg"+(i)).prop('disabled', true)
+                        .trigger("chosen:updated");
+                    $("#cmbAddEditDtlPerson"+(i)).prop('disabled', false)
+                        .trigger("chosen:updated");
+                }
+                else 
+                {
+                    $("#cmbAddEditDtlPerson"+(i)).prop('disabled', true)
+                        .trigger("chosen:updated");
+                    $("#cmbAddEditDtlOrg"+(i)).prop('disabled', false)
+                        .trigger("chosen:updated");
+                }
+            }
+
+        }
+    }
+
+    function setScreenToEditMode() {
+        gScreenMode = '@CommonConstant.SCREEN_MODE_EDIT';
+        clearAddEdit(gScreenMode);
+    }
+    // Edit [End]    
+
+    // Process save edit [Start]
+    function validation() {
+        var flagErr = 0
+
+        var PoNo = $("#txtAddEditPoNo").val();
+        var PrNo = $("#cmbAddEditPrNo").val();
+        var Dateto = $("#txtAddEditToDate").val();
+        var Supp = $("#cmbAddEditSupplier").val();
+
+        
+
+        if (PoNo == null || PoNo == '') {
+            showErrorMesgGrowl('ERROR JS: Purchase Order should not be empty');
+            return flagErr = 1
+        }
+        if (PrNo == null || PrNo == '') {
+            showErrorMesgGrowl('ERROR JS: Purchase Repeat should not be empty');
+            return flagErr = 1
+        }
+        if (Dateto == null || Dateto == '') {
+            showErrorMesgGrowl('ERROR JS: Purchase Date should not be empty');
+            return flagErr = 1
+        }
+        if (Supp == null || Supp == '') {
+            showErrorMesgGrowl('ERROR JS: Supplier Code should not be empty');
+            return flagErr = 1
+        }
+
+        var countDtl = $("#tblDetail").children('tbody').children('tr').length;
+        if (countDtl == null || countDtl == 0) {
+            showErrorMesgGrowl('ERROR JS: Please choose at least on data ' +
+                'to be Approval Detail List');
+            return flagErr = 1
+        }
+            
+        var s = 1;
+        $("#tblDetail").children('tbody').children('tr').each(function () {
+            var dtl = new Object();
+            var trObj = jQuery(this);
+                
+            var seq = trObj.children('td').eq(1).children('input').val();
+            var itemcode = trObj.children('td').eq(2).children('select').val();   
+            var qty = trObj.children('td').eq(3).children('input').val();
+            var unit = trObj.children('td').eq(4).children('input').val();
+            
+            if (seq == null || seq == '') {
+                showErrorMesgGrowl('ERROR JS: SEQ at seq '+s+' should not be empty');
+                return flagErr = 1
+            }
+            
+            if (itemcode == null || itemcode == '') {
+                showErrorMesgGrowl('ERROR JS: Item Code at seq '+s+
+                    ' should not be empty');
+                return flagErr = 1
+            }
+            
+            if (qty == null || qty == '') {
+                showErrorMesgGrowl('ERROR JS: Request Qty at seq '+s+
+                    ' should not be empty');
+                return flagErr = 1
+            }
+
+            if (unit == null || unit == '') {
+                showErrorMesgGrowl('ERROR JS: Unit at seq '+s+
+                    ' should not be empty');
+                return flagErr = 1
+            }
+            
+            s++;
+        });
+
+        return flagErr
+    }
+
+    function btnSave_onClick() {
+        var errValidation = validation();
+        
+        if (errValidation != 1) {
+
+            popUpProgressShow();
+            
+            var params = new Object();
+            var data = new Object();
+
+            data.po_no = $("#txtAddEditPoNo").val()
+            data.pr_no = $("#cmbAddEditPrNo").val();
+            data.po_date = $("#txtAddEditToDate").val();
+            data.supplier_code = $("#cmbAddEditSupplier").val();
+            data.listApprovalFlow = [];
+        
+            $("#tblDetail").children('tbody').children('tr').each(function() {
+                var dtl = new Object();
+                var trObj = jQuery(this);
+            
+                dtl.APPROVAL_FLOW_ID = trObj.children('td').eq(0).children('input').val();
+                dtl.item_code = trObj.children('td').eq(2).children('select').val();
+                dtl.request_qty = trObj.children('td').eq(3).children('input').val();
+                dtl.unit_price = trObj.children('td').eq(4).children('input').val();
+                
+
+                data.listApprovalFlow.push(dtl);
+            });
+
+            params.screenMode = gScreenMode;
+            params.data = data;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/Po/AddEditSave")",
+                contentType: 'application/json',
+                dataType: 'json',
+                traditional: true,
+                data: JSON.stringify(params),
+                success: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResult(returnResult, "Save approval", onSaveSuccess);
+                },
+                error: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResponseError(returnResult, "Save approval");
+                }
+            });  
+        }
+    }
+
+    function onSaveSuccess() {     
+        $("#modalAddEdit").modal('hide');
+        onSearchCriteria(1);
+    }
+
+    function btnCancel_onClick()
+    {
+        clearAddEdit('@CommonConstant.SCREEN_MODE_EDIT');
+    }
+
+    // Delete Multiple [start]
+    function btnDeleteMultiple_onClick() {
+        var isHaveChecked = false;
+        $("input[name='chkRow']").each(function(){
+            if ($(this).prop('checked')) {
+                isHaveChecked = true;
+            }
+        });
+
+        if (!isHaveChecked) {
+            showErrorMesgGrowl("Select one or more record to be deleted.");
+            return;
+        }
+
+        showConfirmMesg("Are you sure want to delete this Data(s) ?", onConfirmDeleteMultiple, "Multiple Delete Confirmation");
+    }
+
+    function onConfirmDeleteMultiple() {
+        popUpProgressShow();
+
+        var selectedKeys = [];
+        var id = null;
+
+        $("input[name='chkRow']").each(function(){
+            if ($(this).prop('checked')) {
+                id = $(this).val();
+                selectedKeys.push(id);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/Po/DeleteMultiple")",
+            contentType: 'application/json',
+            dataType: 'json',
+            traditional: true,
+            data: JSON.stringify(selectedKeys),
+            success: function (returnResult) {
+                
+                popUpProgressHide();
+                handleAjaxResult(returnResult, "Delete Approval Master", onSaveSuccess);
+                
+            },
+            error: function (returnResult) {
+                popUpProgressHide();
+                handleAjaxResponseError(returnResult, "Delete Approval Master");
+            }
+        });
+    }
+    // Delete [End]
+
+    function fixChoosen() {
+        var els = jQuery(".chosen-select");
+        els.on("chosen:showing_dropdown", function () {
+            $(this).parents("div").css("overflow", "visible");
+        });
+        els.on("chosen:hiding_dropdown", function () {
+            var $parent = $(this).parents("div");
+
+            // See if we need to reset the overflow or not.
+            var noOtherExpanded = $('.chosen-with-drop', $parent).length == 0;
+            if (noOtherExpanded)
+                $parent.css("overflow", "");
+        });
+    }
+
+    function changeCmbApproval(index){
+        var approval = $("#cmbAddEditDtlApproverType"+index).val();
+
+        if(approval == "SAT_BUYER"){
+            $("#cmbAddEditDtlOrg"+index).prop('disabled', true).trigger("chosen:updated");
+            $("#cmbAddEditDtlPerson"+index).prop('disabled', true).trigger("chosen:updated");
+
+            $("#cmbAddEditDtlOrg"+index).val('').trigger('change');
+        }
+        else if(approval == "SAT_BY_PERSON"){
+            $("#cmbAddEditDtlOrg"+index).prop('disabled', true).trigger("chosen:updated");
+            $("#cmbAddEditDtlOrg"+index).val('').trigger('change');
+
+            $("#cmbAddEditDtlPerson"+index).prop('disabled', false).trigger("chosen:updated");
+        }
+        else {
+            $("#cmbAddEditDtlPerson"+index).prop('disabled', true).trigger("chosen:updated");
+            $("#cmbAddEditDtlPerson"+index).val('').trigger('change');
+
+            $("#cmbAddEditDtlOrg"+index).prop('disabled', false).trigger("chosen:updated");
+        }
+    }
+
+    //Detail [start]
+    function btnAddDtl_onClick(flagData) 
+    {
+        $("#tblDetail tbody").append(
+        '<tr class="'+l+'"> <td class="text-center grid-checkbox-col"> ' +
+        '<input type="text" class="hidden" name="" id="txtAddEditApprovalFlowId'+l+'" value="" data-detail="" /> ' +
+        '<input type="checkbox" class="grid-checkboxDetail grid-checkbox-body" name="chkRowDetail" id="checkboxBody" value="" data-detail="" /></td> ' +
+        '<td>' +
+        '   <input type="text" id="txtAddEditSeq' +l+ '" style="width:100%; text-align:right;" class="form-control input-sm" readonly value=' +seq+ ' />' +
+        '</td>' +
+        '<td>' +
+        '   <select class="form-control chosen-select " style="width:550px;" id="cmbAddEditItemcode'+l+'">' +
+        '       <option value=""></option>' +
+        '   </select>' +
+        '<td>' +
+        '   <input type="text" id="txtAddEditQty' +l+ '" style="width:100%; text-align:right;" class="form-control input-sm" >' +
+        '</td>' +
+        '<td>' +
+        '   <input type="text" id="txtAddEditUnit' +l+ '" style="width:100%; text-align:right;" class="form-control input-sm" >' +
+        '</td>' +
+        '</tr>');
+
+
+        for(var i = 0; i< gApprovPersonList.length; i++)
+        {
+            $('#cmbAddEditItemcode'+l+'').append($("<option/>", {
+                value: gApprovPersonList[i].item_code,
+                text: gApprovPersonList[i].item_code
+            }));
+        }
+
+
+        seq++;
+        l++;
+    }
+
+    function btnDelDtl_onClick() {
+        $('.grid-checkboxDetail').each(function () {
+            if (this.checked) {
+                $(this).closest("tr").remove();
+            }
+        });
+
+        var index = 0, seqValue = 1;
+        
+        $("#tblDetail").children('tbody').children('tr').each(function() {
+            var input = $('<input type="text" id="txtAddEditSeq' +index+ 
+                '" style="width:100%; text-align:right;" class="form-control input-sm" value=" ' 
+                +seqValue+ '" readonly />');
+
+            $(this).find('td:eq(1)').html(input);
+
+            index = index+1;
+            seqValue += 1;
+                
+                
+        });
+        seq = seqValue;
+    }
+    //Detail[end]
+
+    // locking document
+    @*function checkDataLockingStatus(dataId, moduleId, functionId) {
+        $.ajax({
+            type: "POST",
+            url: "@Html.Toyota().Page.GetActionUrl("CheckDataLockingStatus")",
+            async: false,
+            data: {
+                dataId: dataId,
+                moduleId: moduleId,
+                functionId: functionId
+            },
+            beforeSend: function () { popUpProgressShow(); },
+            success: function (returnResult) {
+                if (returnResult.Result == "ERROR") {
+                    handleAjaxResult(returnResult, "Data Locking", null);
+                    gDataLock = "LOCKED";
+                }
+                else {
+                    gDataLock = "UNLOCKED";
+                    }
+                },
+            error: function (returnResult) {
+                handleAjaxResponseError(returnResult, "Data Locking");
+            },
+            complete: function () { popUpProgressHide(); }
+        });
+    }*@
+    // end locking document
+
+    // Process save edit [Start]
+    function btnUpdate_onClick() {
+        var errValidation = validation();
+
+        if (errValidation != 1) {
+            
+            popUpProgressShow();
+            
+            var params = new Object();
+            var data = new Object();
+
+            data.po_no = $("#txtAddEditPoNo").val()
+            data.pr_no = $("#txttxtAddEditPrNo").val();
+            data.pr_date = $("#txtAddEditToDate").val();
+            data.supplier_code = $("#txtAddEditSupplier").val();
+            data.FUNCTION_ID = $("#cmbAddEditFunction").val();
+            data.listApprovalFlow = [];
+        
+            $("#tblDetail").children('tbody').children('tr').each(function() {
+                var dtl = new Object();
+                var trObj = jQuery(this);
+            
+                dtl.APPROVAL_FLOW_ID = trObj.children('td').eq(0).children('input').val();
+                dtl.request_qty = trObj.children('td').eq(2).children('input').val();
+                dtl.unit_qty = trObj.children('td').eq(3).children('select').children('option:selected').text();
+
+                data.listApprovalFlow.push(dtl);
+            });
+
+            params.screenMode = gScreenMode;
+            params.data = data;
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/Approval/AddEditSave")",
+                contentType: 'application/json',
+                dataType: 'json',
+                traditional: true,
+                data: JSON.stringify(params),
+                success: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResult(returnResult, "Save Approval", onUpdateSuccess);
+                },
+                error: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResponseError(returnResult, "Save Approval");
+                }
+            });   
+        }
+    }
+
+    function onUpdateSuccess() {     
+        $("#modalAddEdit").modal('hide');
+        onSearchCriteria(1);
+    }
+
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode)
+        {
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    }
+
+    //fungsi tombol download
+    function btnDownloadClose_onClick() {
+        $('#confirmationDownload').css('display', 'none');
+    }
+
+    function btnDownload_onClick() {
+        $('#confirmationDownload').css('display', '');
+    }
+
+    function btnDownloadAct_onClick(flag) {
+
+        $('#confirmationDownload').css('display', 'none');
+
+        popUpProgressShow();
+
+        $.fileDownload('@Url.Content("~/Po/DownloadFileExcel")', {
+                httpMethod: "POST",
+                data: {
+                    po_no: $("#txtSearchPoNo").val(),
+                    pr_no: $("#txtSearchPrNo").val(),
+                    po_date: $("#txtSearchPoDate").val(),
+                    supplier_code: $("#txtSearchSupplierCode").val(),
+                    RowsPerPage: $("#recordPerPage").val(),
+                    CurrentPage: $("#txtCurrentPage").val(),
+                    PageFlag: flag
+                },
+                successCallback: function (url) {
+                    popUpProgressHide();
+                },
+                failCallback: function (responseHtml, url) {
+                    popUpProgressHide();
+                    var returnResult = JSON.parse(responseHtml.replace("<pre>", "")
+                        .replace("</pre>", ""));
+
+                    handleAjaxResultGrowl(returnResult, "Download");
+                }
+            });
+        }
+
+
+        // Download Excel [END]
+
+        //Download template [Start]
+        function btnDownloadTemplate_onClick() {
+            popUpProgressShow();
+
+            $.fileDownload('@Url.Content("~/Po/DownloadTemplate")', {
+            httpMethod: 'POST',
+            data: {
+
+            },
+            successCallback: function (url) {
+                popUpProgressHide();
+            },
+            failCallback: function (responseHtml, url) {
+                popUpProgressHide();
+                var returnResult =
+                    JSON.parse(responseHtml.replace("<pre>", "").replace("</pre>", ""));
+
+                handleAjaxResultGrowl(returnResult, "Download Template");
+            }
+        });
+    }
+
+</script>
+
+}

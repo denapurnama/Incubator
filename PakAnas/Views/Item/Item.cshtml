@@ -1,0 +1,464 @@
+﻿@using System;
+@using PakAnas.Commons.Constants;
+@using PakAnas.Models;
+
+@{
+    Layout= "~/Views/Shared/_Layout.cshtml";
+} 
+
+@section HeadScript {
+    <link rel="stylesheet" href="@Url.Content("~/Content/Bootstrap/css/FixedTable.css")" />
+}
+
+@Html.Partial("_SearchCriteria")
+
+<div id="divGrid">
+	@Html.Partial("_GridView")
+</div>
+
+<div id="divModalAddEdit">
+    @Html.Partial("_ModalAddEdit") 
+</div>
+
+@Html.Partial("_UploadDataPopup")
+
+<div id="confirmationDownload" class="bootstrap-growl alert alert-success" style="position: fixed; margin: 0px 0px 0px -125px; z-index: 9999; top: 20px; width: 250px; left: 50%; display:none;">
+	<a class="close" onClick="btnDownloadClose_onClick()">×</a>Halo, Mau Download File berdasarkan ?
+	<br/><br /><button type="button" class="btn btn-xs btn-warning" onClick="btnDownloadAct_onClick(0)">All page</button>
+	&nbsp<button type="button" class="btn btn-xs btn-success" onClick="btnDownloadAct_onClick(1)">Per page</button>
+</div>
+
+@section BodyScript{
+<!-- Modal Upload js -->
+<script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/dropzone.js")"></script>
+<!-- Bootstrap Datepicker js -->
+<script type="text/javascript" src="@Url.Content("~/Content/Bootstrap/js/date-time/bootstrap-datepicker.js")"></script>
+<!--
+<script type="text/javascript" src="@Url.Content("~/Content/js/freezeTable.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Content/js/FixedTable.js")"></script> -->
+
+<script type="text/javascript">
+    var gScreenMode = null;
+    var gChecked = null;
+    var gItemIdEdit = 0;
+
+    $(document).ready(function () {
+        datepicker.init();
+
+        //freezeTable.init();
+        //freezeScroll();
+    });
+
+    //function freezeScroll() {
+    //    $.remakeFixedTable();
+    //}
+
+    var datepicker = {
+        init: function () {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd-M-yyyy'
+            });
+        }
+    };
+
+    // Search [Start]
+    function btnSearch_onClick() {
+        onSearchCriteria(1);
+    }
+
+    function onSearchCriteria(page) {
+        popUpProgressShow();
+
+        $.ajax({
+            type: "POST",
+            url: "@Html.Toyota().Page.GetActionUrl("Search")",
+            data: {
+                ITEM_CODE: $("#txtSearchItemcode").val(),
+                ITEM_NAME: $("#txtSearchItemname").val(),
+                ITEM_UM: $("#txtSearchItemum").val(),
+                recordPerPage: $("#recordPerPage").val(),
+                currentPage: page
+            },
+            success: function (data) {
+                $("#divGrid").html(data);
+
+                //freezeTable.init();
+                //freezeScroll();
+
+                popUpProgressHide();
+            },
+            error: function (data) {
+                popUpProgressHide();
+            }
+        });
+    }
+
+    function btnClear_onClick() {
+        $("#txtSearchItemcode").val('');
+        $("#txtSearchItemname").val('');
+        $("#txtSearchItemum").val('');
+        onSearchCriteria(1);
+    }
+    // Search [End]
+
+    // Clear add edit [Start]
+    function clearAddEdit() {
+        gItemIdEdit = 0;
+
+        $("#txtAddEditItemcode").val('');
+        $("#txtAddEditItemname").val('');
+        $("#txtAddEditItemum").val('');
+
+        $("#link-upload").attr("data-filename", "");
+        $("#link-upload").attr("data-filenameserver", "");
+        $("#link-upload").attr("data-fileNameHalfPath", "");
+        $("#link-upload").html("");
+    }
+    // Clear add edit [End]
+
+    // Add [Start]
+    function btnAdd_onClick() {
+        setScreenToAddMode();
+        $("#modalAddEdit").modal();
+    }
+
+    function setScreenToAddMode() {
+
+        clearAddEdit();
+        gScreenMode = '@CommonConstant.SCREEN_MODE_ADD';
+
+        $("#txtAddEditItemcode").prop('disabled', false);
+        $("#txtAddEditItemname").prop('disabled', false);
+        $("#txtAddEditItemum").prop('disabled', false);
+    }
+    // Add [End]
+
+    // Edit [Start]
+    function btnEdit_onClick() {
+
+        var isHaveChecked = false;
+        gChecked = 0;
+
+        $("input[name='chkRow']").each(function () {
+            if ($(this).prop('checked')) {
+                isHaveChecked = true;
+                gChecked = gChecked + 1;
+                gItemIdEdit = $(".grid-checkbox-body:checked").attr('data-itemscode');
+            }
+        });
+
+        if (!isHaveChecked || gChecked > 1) {
+            showErrorMesgGrowl("Choose one Data(s) to be Edit");
+            return;
+        } else {
+            onSuccessEdit();
+        }
+    }
+
+    function setScreenToEditMode() {
+        gScreenMode = '@CommonConstant.SCREEN_MODE_EDIT';
+
+        $("#txtAddEditItemcode").prop('disabled', true);
+        $("#txtAddEditItemname").prop('disabled', false);
+        $("#txtAddEditItemum").prop('disabled', false);
+    }
+
+    function onSuccessEdit() {
+
+        popUpProgressShow();
+
+        setScreenToEditMode();
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/Item/GetByKey")",
+            dataType: 'json',
+            traditional: true,
+            data: {
+                itemscode: gItemIdEdit
+            },
+            success: function (returnResult) {
+                popUpProgressHide();
+                handleAjaxResultGrowl(returnResult, "Get Data Item", onEditGetDataSuccess,
+                    null, true);
+            },
+            error: function (returnResult) {
+                popUpProgressHide();
+                handleAjaxResponseErrorGrowl(returnResult, "Get Data Item");
+            }
+        });
+    }
+
+    function onEditGetDataSuccess(returnResult) {
+        console.log(returnResult);
+        var data = returnResult.Params[0];
+
+        $("#txtAddEditItemcode").val(data.ITEM_CODE);
+        $("#txtAddEditItemname").val(data.ITEM_NAME);
+        $("#txtAddEditItemum").val(data.ITEM_UM);
+
+        $("#modalAddEdit").modal();
+    }
+    // Edit [End]
+
+    // Process save edit [Start]
+    function validation() {
+        var flagErr = 0;
+
+        var itm_code = $("#txtAddEditItemcode").val();
+        var itm_name = $("#txtAddEditItemname").val();
+        var itm_um = $("#txtAddEditItemum").val();
+
+        if (itm_code == null || itm_code == '')
+        {
+            showErrorMesgGrowl('ERROR JS: ITEM Code should not be empty');
+            return flagErr = 1
+            
+        }
+        if (itm_name == null || itm_name == '')
+        {
+            showErrorMesgGrowl('ERROR JS: ITEM Name should not be empty');
+            return flagErr = 1
+        }
+        if (itm_um == null || itm_um == '')
+        {
+            showErrorMesgGrowl('ERROR JS: ITEM Um should not be empty');
+            return flagErr = 1
+        }
+        
+        return flagErr
+    }
+
+    $("#btnSave").click(function() {
+        if (validation()!=1)
+        {
+            var params = new Object();
+            var data = new Object();
+
+            params.screenMode = gScreenMode;
+            params.data = data;
+
+            
+           
+            data.ITEM_CODE = $("#txtAddEditItemcode").val();
+            data.ITEM_NAME = $("#txtAddEditItemname").val();
+            data.ITEM_UM = $("#txtAddEditItemum").val();
+
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/Item/AddEditSave")",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    traditional: true,
+                    data: JSON.stringify(params),
+                    success: function (returnResult) {
+                        popUpProgressHide();
+                        if (returnResult.Result == 'SUCCESS') {
+                            handleAjaxResultGrowl(returnResult, "Save Employee",
+                                onSaveSuccess);
+                        } else {
+                            showErrorMesgGrowl(returnResult.ErrMesgs[0]);
+                        }
+                    },
+                    error: function (returnResult) {
+                        popUpProgressHide();
+                        handleAjaxResponseErrorGrowl(returnResult, "Save Employee");
+                    }
+                });
+            }
+    });
+
+        function onSaveSuccess() {
+
+            clearAddEdit();
+            $("#modalAddEdit").modal('hide');
+
+            onSearchCriteria(1);
+        }
+        // Process save edit [Start]
+
+        // Delete [Start]
+        function btnDelete_onClick() {
+
+            if ($(".grid-checkbox-body:checked").length == 0) {
+                showErrorMesgGrowl("Exact one data should be selected");
+            }
+            else {
+                showConfirmMesg("Are you sure want to delete this data ?",
+                    onConfirmDelete, "Delete Confirmation");
+            }
+        }
+
+        function btnDeleteMultiple_onClick() {
+            var isHaveChecked = false;
+            $("input[name='chkRow']").each(function () {
+                if ($(this).prop('checked')) {
+                    isHaveChecked = true;
+                }
+            });
+
+            if (!isHaveChecked) {
+                showErrorMesgGrowl("Select one or more record to be deleted.");
+                return;
+            }
+
+            showConfirmMesg("Are you sure you want to delete the record ?",
+                onConfirmDeleteMultiple, "Delete Confirmation");
+        }
+
+        function onConfirmDeleteMultiple() {
+            popUpProgressShow();
+
+            var selectedKeys = [];
+            var id = null;
+
+            $("input[name='chkRow']").each(function () {
+                if ($(this).prop('checked')) {
+                    id = $(this).attr('data-itemscode');
+                    selectedKeys.push(id);
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/Item/Delete")",
+                contentType: 'application/json',
+                dataType: 'json',
+                traditional: true,
+                data: JSON.stringify(selectedKeys),
+                success: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResultGrowl(returnResult, "Delete Item", onSaveSuccess);
+
+                },
+                error: function (returnResult) {
+                    popUpProgressHide();
+                    handleAjaxResponseErrorGrowl(returnResult, "Delete Item");
+                }
+            });
+        }
+        // Delete Multiple [end]
+
+        // Download Data to Excel
+        function btnDownloadClose_onClick() {
+            $('#confirmationDownload').css('display', 'none');
+        }
+
+        function btnDownload_onClick() {
+            $('#confirmationDownload').css('display', '');
+        }
+
+        function btnDownloadAct_onClick(flag) {
+
+            $('#confirmationDownload').css('display', 'none');
+
+            popUpProgressShow();
+
+            $.fileDownload('@Url.Content("~/Item/DownloadFileExcel")', {
+                httpMethod: "POST",
+                data: {
+                    ITEM_CODE: $("#txtSearchItemcode").val(),
+                    ITEM_NAME: $("#txtSearchItemname").val(),
+                    ITEM_UM: $("#txtSearchItemum").val(),
+                    RowsPerPage: $("#recordPerPage").val(),
+                    CurrentPage: $("#txtCurrentPage").val(),
+                    PageFlag: flag
+                },
+                successCallback: function (url) {
+                    popUpProgressHide();
+                },
+                failCallback: function (responseHtml, url) {
+                    popUpProgressHide();
+                    var returnResult = JSON.parse(responseHtml.replace("<pre>", "")
+                        .replace("</pre>", ""));
+
+                    handleAjaxResultGrowl(returnResult, "Download");
+                }
+            });
+        }
+
+
+    // Download Excel [END]
+
+    //Download template [Start]
+    function btnDownloadTemplate_onClick() {
+        popUpProgressShow();
+
+        $.fileDownload('@Url.Content("~/Item/DownloadTemplate")', {
+            httpMethod: 'POST',
+            data: {
+
+            },
+            successCallback: function (url) {
+                popUpProgressHide();
+            },
+            failCallback: function (responseHtml, url) {
+                popUpProgressHide();
+                var returnResult =
+                    JSON.parse(responseHtml.replace("<pre>", "").replace("</pre>", ""));
+
+                handleAjaxResultGrowl(returnResult, "Download Template");
+            }
+        });
+    }
+    // [End]
+
+    // Upload [Start]
+    function btnUpload_onClick() {
+        $("#uploadMode").val('@CommonConstant.SCREEN_MODE_ADD');
+        $("#uploadDataFilePopup").modal();
+    }
+
+    function onUploadDataFileSuccess() {
+        $("#uploadDataFilePopup").modal('hide');
+        onSearchCriteria(1);
+    }
+    // Upload [End]
+
+    //Upload Attachment
+    function btnUploadAttach_onClick(e) {
+        $("#uploadAttachFilePopup").modal();
+    }
+
+    function onUploadAttachmentSuccess(returnResult) {
+        if (returnResult.Result == "ERROR") {
+            //$("#uploadFile" + selSetting).val(fileName);
+            showErrorMesgGrowl(returnResult.ErrMesgs);
+        }
+        else {
+            //var id = returnResult.Params[3];
+            //var row = returnResult.Params[6];
+            $("#link-upload").attr('data-filename', returnResult.Params[0]);
+            $("#link-upload").attr('data-filenameserver', returnResult.Params[1]);
+            $("#link-upload").html(returnResult.Params[0]);
+            $("#link-upload").attr('data-fileNameHalfPath', returnResult.Params[5]);
+            //gFileNameHalfPath = returnResult.Params[5];
+
+            $("#uploadAttachFilePopup").modal('hide');
+        }
+    }
+
+    function onDownloadFile(e) {
+        console.log(e);
+        popUpProgressShow();
+        $.fileDownload("@Html.Toyota().Page.GetActionUrl("DownloadFile")", {
+            data: {
+                fileName: $(e).attr('data-filename'),
+                fileNameHalfPath: $(e).attr('data-fileNameHalfPath')
+            },
+            successCallback: function (url) {
+                popUpProgressHide();
+            },
+            failCallback: function (responseHtml, url) {
+                popUpProgressHide();
+                handleDownloadResponseError(responseHtml, url);
+            }
+        });
+    }
+    //Upload Attachment [End]
+
+</script>
+}

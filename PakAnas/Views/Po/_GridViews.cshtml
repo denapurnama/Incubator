@@ -1,0 +1,80 @@
+﻿@using System;
+@using PakAnas.Models;
+@using PakAnas.Commons.Models;
+
+@{
+    IList<PakAnas.Models.Approval> listData = (IList<PakAnas.Models.Approval>)ViewData["ListData"];
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#checkall").click(function () {
+            $(".grid-checkbox").prop("checked", $("#checkall").is(":checked"));
+        });
+
+        $(".grid-checkbox").click(function () {
+            $("#checkall").prop("checked", $('.grid-checkbox:not(#checkall)').not(':checked').length == 0);
+        });
+    });
+</script>
+
+<div class="">
+    <div class="table-responsive">
+        <table style="margin-top:5px" class="table table-stripped table-condensed table-bordered" id="gridProject">
+            <thead>
+                <tr>
+                    <th class="grid-checkbox-col" rowspan="2" style="width:40px;">
+                        <input class="grid-checkbox" type="checkbox" id="checkall" />
+                    </th>
+                    <th rowspan="2" width="70px;">Edit</th>
+                    <th rowspan="2" width="125px;">Po no</th>
+                    <th rowspan="2" width="125px;">Pr no</th>      
+                    <th rowspan="2">Po Date</th>
+                    <th rowspan="2">Supplier Code</th>
+                    <th colspan="2">Created</th>
+                    <th colspan="2">Changed</th>
+                </tr>
+                <tr>
+                    <th width="125px;">By</th>
+                    <th width="125px;">Date</th>
+					<th width="125px;">By</th>
+					<th width="125px;">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (listData == null || listData.Count == 0)
+            {
+                <tr>
+                    <td colspan="14">No Data Found</td>
+                </tr>
+            }
+            else
+            {
+                foreach (Approval obj in listData)
+                { 
+                    <tr>
+                         <td class="text-center grid-checkbox-col">
+                             <input type="checkbox" class="grid-checkbox grid-checkbox-body" name="chkRow" value="@obj.po_no"/>
+                         </td>
+                         <td align="center">
+                         <a onclick="linkEdit_onClick('@obj.po_no')" 
+                             class="btn-xxs cursor-link" title="Edit">
+                             <i class="ace-icon fa fa-pencil"></i></a> 
+                         </td>
+                         <td align="center">@obj.po_no</td>
+                         <td align="center">@obj.pr_no</td>
+                         <td align="left">@obj.PO_DATE_STR</td>
+                         <td align="left">@obj.supplier_code</td>
+                         <td align="left">@obj.CREATED_BY</td>
+                         <td align="center">@obj.CREATED_DT_STR</td>
+                         <td align="left">@obj.CHANGED_BY</td>
+                         <td align="center">@obj.CHANGED_DT_STR</td>
+                    </tr>
+                }
+            }
+      
+            </tbody>
+        </table>
+    </div>
+</div>
+@Html.Partial("_PaginatorBottom", (PagingModel)ViewData["Paging"])
