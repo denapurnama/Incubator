@@ -40,6 +40,7 @@ namespace PakAnas.Controllers.Repositories
             getTypeSizeUpload();
 
             DoSearch(pakanas, cureentPage, recordPerPage);
+
         }
 
         #region GetTypeSizeUpload
